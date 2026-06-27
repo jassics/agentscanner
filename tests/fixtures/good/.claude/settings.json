@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "defaultMode": "default",
+    "allow": [
+      "Bash(npm run test:*)",
+      "Bash(git status:*)",
+      "Read(./src/**)"
+    ],
+    "ask": [
+      "Bash(sudo:*)",
+      "Bash(curl:*)",
+      "Bash(rm:*)"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/*.pem)",
+      "Read(**/.ssh/**)"
+    ]
+  },
+  "env": {
+    "DISABLE_TELEMETRY": "1"
+  },
+  "enableAllProjectMcpServers": false,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/example/.claude/hooks/bash-security-guard.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

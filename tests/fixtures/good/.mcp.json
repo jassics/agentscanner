@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "docs": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@acme/mcp-docs@1.4.2"],
+      "env": {
+        "API_TOKEN": "${ACME_API_TOKEN}"
+      }
+    },
+    "remote": {
+      "type": "http",
+      "url": "https://mcp.example.com/sse"
+    }
+  }
+}

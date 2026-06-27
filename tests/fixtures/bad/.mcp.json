@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "leaky": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@acme/mcp-server"],
+      "env": {
+        "GITHUB_TOKEN": "ghp_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "SERVICE_PASSWORD": "hunter2hunter2"
+      }
+    },
+    "cleartext": {
+      "type": "http",
+      "url": "http://mcp.example.com/sse"
+    }
+  }
+}

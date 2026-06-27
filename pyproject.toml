@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agentscan"
+version = "0.1.0"
+description = "Static security scanner for agentic AI configuration: settings, permissions, hooks, MCP servers, agents, skills, and steering files (Checkov for AI agent stacks)."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Sanjeev Jaiswal (Jassi)", email = "jassics@gmail.com" }]
+keywords = ["agentic-ai", "agent-security", "security", "sast", "static-analysis", "mcp", "llm-security", "devsecops", "claude-code"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Security",
+]
+dependencies = [
+    "typer>=0.12",
+    "rich>=13.0",
+    "PyYAML>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/jassics/agentscan"
+Issues = "https://github.com/jassics/agentscan/issues"
+
+[project.scripts]
+agentscan = "agentscan.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agentscan"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

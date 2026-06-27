@@ -1,0 +1,67 @@
+{
+  "$comment": "claudit hardened reference settings. Each block is annotated with the CC-* check it satisfies. This file is the canonical known-good fixture and must scan with zero findings.",
+
+  "permissions": {
+    "$comment": "CC-PERM-001: no bypassPermissions/acceptEdits default. CC-PERM-002/003: no broad or dangerous unscoped Bash allows.",
+    "defaultMode": "default",
+    "allow": [
+      "Bash(npm run test:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Read(./src/**)"
+    ],
+    "ask": [
+      "Bash(sudo:*)",
+      "Bash(git push:*)",
+      "Bash(rm:*)",
+      "Bash(curl:*)"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/id_rsa)",
+      "Read(**/.ssh/**)",
+      "Read(**/.aws/credentials)",
+      "Read(**/.git-credentials)",
+      "Edit(**/.env)",
+      "Edit(**/*.pem)"
+    ]
+  },
+
+  "env": {
+    "$comment": "CC-ENV-001/CC-SECRET-001: no endpoint redirection, no hardcoded tokens. Reference secrets via the shell environment only.",
+    "DISABLE_TELEMETRY": "1"
+  },
+
+  "enableAllProjectMcpServers": false,
+
+  "hooks": {
+    "$comment": "CC-HOOK-001..004: local absolute-path scripts, no remote exec, no network in context-injecting events, explicit timeouts.",
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/example/.claude/hooks/bash-security-guard.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/example/.claude/hooks/secret-scan-on-write.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
