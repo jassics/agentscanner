@@ -58,6 +58,18 @@ plugin), so a single run cleanly covers a repo, your global config, or both.
 | `AS-SECRET-001` | HIGH | Hardcoded secret/API key in a config file |
 | `AS-AGENT-001` | HIGH | Over-privileged agent/skill (`bypassPermissions`, `tools: *`) |
 | `AS-PROMPT-001` | MEDIUM | Prompt-injection / hidden-unicode indicators in steering files |
+| `AS-SKILL-001` | CRITICAL | Skill requests write access to agent identity files |
+| `AS-SKILL-002` | HIGH | Skill has a social-engineering `Prerequisites` section with pipe-to-shell |
+| `AS-SKILL-003` | HIGH | Universal-Format skill missing a cryptographic signature |
+| `AS-SKILL-004` | HIGH | Skill sets `permissions.network: true` (binary boolean, not a domain allowlist) |
+| `AS-SKILL-005` | HIGH | Skill declares explicit shell access |
+| `AS-SKILL-006` | HIGH | Skill `risk_tier` contradicts declared permissions (risk-tier spoofing) |
+| `AS-SKILL-007` | CRITICAL | Skill file contains YAML unsafe-execution tags |
+| `AS-SKILL-008` | HIGH | Skill explicitly disables sandboxed execution |
+| `AS-SKILL-009` | MEDIUM | Universal-Format skill missing `version` field (update-drift risk) |
+| `AS-SKILL-010` | MEDIUM | Skill body contains a standalone base64-encoded block (obfuscated payload) |
+| `AS-SKILL-011` | MEDIUM | Universal-Format skill missing `publisher` field (governance gap) |
+| `AS-SKILL-012` | MEDIUM | Multi-platform skill missing a signature (security metadata lost in translation) |
 
 See [`DESIGN.md`](DESIGN.md) for the architecture, threat model, and the verified
 Claude Code semantics the permission checks are grounded in. A secure baseline
