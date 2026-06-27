@@ -11,7 +11,7 @@ from ..models import Finding
 def render(findings: List[Finding], scanned: int) -> str:
     by_sev = Counter(f.severity.name for f in findings)
     doc = {
-        "tool": "agentscan",
+        "tool": "agentscanner",
         "summary": {
             "resources_scanned": scanned,
             "findings": len(findings),

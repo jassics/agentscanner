@@ -1,6 +1,6 @@
 # Claude Code Configuration Security Scanner — Design Document
 
-> Working title: **`agentscan`** (Claude + audit). A Checkov/Terrascan-style static
+> Working title: **`agentscanner`** (Claude + audit). A Checkov/Terrascan-style static
 > analyzer for Claude Code configuration artifacts: settings, permissions, hooks,
 > MCP servers, agents/subagents, skills, slash commands, and `CLAUDE.md` memory.
 
@@ -23,7 +23,7 @@ Misconfigurations and malicious contributions in these files create real risk:
 compromise, and prompt injection** — yet there is no `checkov` for them. Reviewers
 eyeball JSON and Markdown by hand, and CI has nothing to gate on.
 
-`agentscan` fills that gap: a fast, **static, read-only** scanner that discovers
+`agentscanner` fills that gap: a fast, **static, read-only** scanner that discovers
 Claude Code artifacts, evaluates them against a curated policy catalog, and emits
 prioritized, framework-mapped findings (CLI table, JSON, SARIF) suitable for local
 use, pre-commit, and CI.
@@ -39,7 +39,7 @@ use, pre-commit, and CI.
 
 ## 2. Core security invariant — the scanner never executes what it parses
 
-`agentscan` ingests *untrusted* config and prompt files. The single most important
+`agentscanner` ingests *untrusted* config and prompt files. The single most important
 property: **it MUST NOT execute, source, shell-expand, resolve, or network-fetch
 anything it reads.**
 
@@ -148,7 +148,7 @@ framework mapping. Severities: `CRITICAL / HIGH / MEDIUM / LOW / INFO`.
                  └─────┬──────┘  (single-file checks now; cross-file class = v2)
                        │
                  ┌─────▼──────┐  baseline/suppression, severity threshold,
-                 │  Findings  │  inline `# agentscan:ignore CC-XXX` directives
+                 │  Findings  │  inline `# agentscanner:ignore CC-XXX` directives
                  └─────┬──────┘
                        │
                  ┌─────▼──────┐  CLI table · JSON · SARIF (GitHub code scanning)
@@ -170,12 +170,12 @@ framework mapping. Severities: `CRITICAL / HIGH / MEDIUM / LOW / INFO`.
    community-contributable rules — loaded from a built-in dir and `--policy-dir`.
 5. **Rules are independently authored.** The `awesome-claude-security` repo
    (GPL-3.0) is used as *inspiration and as a fixture corpus to scan*, never as
-   copied rule text/taxonomy — keeping `agentscan` free to license permissively
+   copied rule text/taxonomy — keeping `agentscanner` free to license permissively
    (Apache-2.0 proposed). See §10.
 
 ### Module layout
 ```
-src/agentscan/
+src/agentscanner/
   cli.py            # Typer CLI
   models.py         # Severity, ArtifactType, Resource (IR), Finding
   discovery.py      # scope walking + classification
@@ -195,7 +195,7 @@ tests/fixtures/{bad,good}/   # paired per-check fixtures (see §8)
 ## 7. CLI UX (Checkov-flavored)
 
 ```
-agentscan scan [PATH]                 # default: scan ./ (+ optional --include-user)
+agentscanner scan [PATH]                 # default: scan ./ (+ optional --include-user)
   --include-user                    # also scan ~/.claude
   --framework all|settings|hooks|mcp|agents|skills|prompts
   --check AS-HOOK-001,...           # run only these
@@ -203,13 +203,13 @@ agentscan scan [PATH]                 # default: scan ./ (+ optional --include-u
   --severity-threshold HIGH         # only report >= threshold
   --output cli|json|sarif           # default cli
   --output-file results.sarif
-  --baseline .agentscan.baseline.json # suppress known/accepted findings
-  --config .agentscan.yaml            # project config (skips, thresholds, policy-dir)
+  --baseline .agentscanner.baseline.json # suppress known/accepted findings
+  --config .agentscanner.yaml            # project config (skips, thresholds, policy-dir)
   --policy-dir ./policies           # load custom YAML policies
   --fail-on HIGH                    # exit nonzero if any finding >= level (CI gate)
   --soft-fail                       # always exit 0
-agentscan list-checks                 # print catalog (id, severity, title)
-agentscan version
+agentscanner list-checks                 # print catalog (id, severity, title)
+agentscanner version
 ```
 
 > **v1 implements a subset of the flags above.** Shipped now: `scan` (with
@@ -218,7 +218,7 @@ agentscan version
 > `version`. **Roadmap:** `--baseline`, `--config`, `--policy-dir` and the
 > declarative-YAML policy engine (the `policies/` dir). v1 ships Python-coded
 > checks only; shared patterns live in `data.py` (not a separate `data/` dir).
-Distribution: **PyPI** (`pip install agentscan` / `pipx`/`uvx`), plus a published
+Distribution: **PyPI** (`pip install agentscanner` / `pipx`/`uvx`), plus a published
 **pre-commit hook** and a **GitHub Action** wrapper. Python 3.9+.
 
 ---
@@ -232,7 +232,7 @@ reference settings are the canonical known-good fixture**, and every hardening
 choice maps 1:1 to a check — the hardened config and the catalog are duals.
 
 Additional verification:
-- Run `agentscan` against **real corpora**: this machine's `~/.claude` (settings,
+- Run `agentscanner` against **real corpora**: this machine's `~/.claude` (settings,
   hooks, agents, skills) and a checkout of `awesome-claude-security` — confirm
   signal, measure false-positive rate, hand-triage.
 - Golden-output snapshot tests for JSON/SARIF.
@@ -253,10 +253,10 @@ satisfies, making the file both documentation and the primary good-fixture.
 
 ## 10. Licensing & provenance
 
-- **`agentscan` license: Apache-2.0** (permissive; PyPI-friendly).
+- **`agentscanner` license: Apache-2.0** (permissive; PyPI-friendly).
 - `awesome-claude-security` is **GPL-3.0**. We treat it strictly as *inspiration*
   and as an input corpus to scan; we do **not** copy its rule text, taxonomy, or
-  structure into the package (which could force GPL on `agentscan`). Cited as prior
+  structure into the package (which could force GPL on `agentscanner`). Cited as prior
   art in README, not vendored.
 
 ---

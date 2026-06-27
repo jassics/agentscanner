@@ -58,8 +58,8 @@ def render(findings: List[Finding]) -> str:
             {
                 "tool": {
                     "driver": {
-                        "name": "agentscan",
-                        "informationUri": "https://github.com/jassics/agentscan",
+                        "name": "agentscanner",
+                        "informationUri": "https://github.com/jassics/agentscanner",
                         "version": __version__,
                         "rules": _rules(),
                     }

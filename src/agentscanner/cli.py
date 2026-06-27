@@ -1,4 +1,4 @@
-"""agentscan command-line interface."""
+"""agentscanner command-line interface."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -96,7 +96,7 @@ def scan(
 def list_checks() -> None:
     """List the built-in check catalog."""
     console = Console()
-    table = Table(title="agentscan checks")
+    table = Table(title="agentscanner checks")
     table.add_column("ID", no_wrap=True)
     table.add_column("Severity", no_wrap=True)
     table.add_column("Title")
@@ -107,8 +107,8 @@ def list_checks() -> None:
 
 @app.command()
 def version() -> None:
-    """Print the agentscan version."""
-    print(f"agentscan {__version__}")
+    """Print the agentscanner version."""
+    print(f"agentscanner {__version__}")
 
 
 if __name__ == "__main__":  # pragma: no cover

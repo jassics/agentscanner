@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "agentscan"
+name = "agentscanner"
 version = "0.1.0"
 description = "Static security scanner for agentic AI configuration: settings, permissions, hooks, MCP servers, agents, skills, and steering files (Checkov for AI agent stacks)."
 readme = "README.md"
@@ -26,14 +26,14 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/jassics/agentscan"
-Issues = "https://github.com/jassics/agentscan/issues"
+Homepage = "https://github.com/jassics/agentscanner"
+Issues = "https://github.com/jassics/agentscanner/issues"
 
 [project.scripts]
-agentscan = "agentscan.cli:app"
+agentscanner = "agentscanner.cli:app"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/agentscan"]
+packages = ["src/agentscanner"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

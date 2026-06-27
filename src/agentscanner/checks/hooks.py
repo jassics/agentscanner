@@ -1,7 +1,7 @@
 """Hook checks (AS-HOOK-*).
 
 Hooks run arbitrary commands at lifecycle events — the highest-impact artifact.
-We inspect the command strings as DATA only; agentscan never executes them.
+We inspect the command strings as DATA only; agentscanner never executes them.
 Hooks can live in settings.json and in agent frontmatter, so checks iterate both.
 """
 from __future__ import annotations

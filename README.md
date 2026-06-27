@@ -1,4 +1,4 @@
-# agentscan
+# agentscanner
 
 **Static security scanner for Claude Code configuration** — settings,
 permissions, hooks, MCP servers, agents/subagents, skills, slash commands, and
@@ -9,12 +9,12 @@ arbitrary code that runs on every tool call; an MCP server is an arbitrary
 process; a permission rule decides what the agent may do without asking; a skill
 or `CLAUDE.md` is untrusted text that steers the model. Misconfigurations and
 malicious contributions create real risk — code execution, credential exfil,
-permission bypass, supply-chain compromise, and prompt injection. `agentscan` finds
+permission bypass, supply-chain compromise, and prompt injection. `agentscanner` finds
 them.
 
 ## Core safety invariant
 
-> **agentscan never executes what it parses.** It does not run hook commands,
+> **agentscanner never executes what it parses.** It does not run hook commands,
 > launch MCP servers, resolve `apiKeyHelper`/`statusLine` scripts, or fetch any
 > URL. It reads untrusted config as *data only* — the moment a scanner execs its
 > input, it becomes the vulnerability.
@@ -22,18 +22,18 @@ them.
 ## Install
 
 ```bash
-pip install agentscan        # or: pipx install agentscan / uvx agentscan
+pip install agentscanner        # or: pipx install agentscanner / uvx agentscanner
 ```
 
 ## Usage
 
 ```bash
-agentscan scan .                       # scan the current repo's .claude/, .mcp.json, CLAUDE.md
-agentscan scan . --include-user        # also scan ~/.claude (user scope)
-agentscan scan . --severity-threshold HIGH
-agentscan scan . --output sarif --output-file agentscan.sarif   # for GitHub code scanning
-agentscan scan . --fail-on HIGH        # CI gate: nonzero exit on HIGH+ findings
-agentscan list-checks                  # show the check catalog
+agentscanner scan .                       # scan the current repo's .claude/, .mcp.json, CLAUDE.md
+agentscanner scan . --include-user        # also scan ~/.claude (user scope)
+agentscanner scan . --severity-threshold HIGH
+agentscanner scan . --output sarif --output-file agentscanner.sarif   # for GitHub code scanning
+agentscanner scan . --fail-on HIGH        # CI gate: nonzero exit on HIGH+ findings
+agentscanner list-checks                  # show the check catalog
 ```
 
 Every resource is tagged with its **scope** (project / local / user / managed /
@@ -68,10 +68,10 @@ config lives in [`hardened/`](hardened/).
 GitHub Actions (SARIF upload to code scanning):
 
 ```yaml
-- run: pipx install agentscan
-- run: agentscan scan . --output sarif --output-file agentscan.sarif --soft-fail
+- run: pipx install agentscanner
+- run: agentscanner scan . --output sarif --output-file agentscanner.sarif --soft-fail
 - uses: github/codeql-action/upload-sarif@v3
-  with: { sarif_file: agentscan.sarif }
+  with: { sarif_file: agentscanner.sarif }
 ```
 
 pre-commit:
@@ -79,9 +79,9 @@ pre-commit:
 ```yaml
 - repo: local
   hooks:
-    - id: agentscan
-      name: agentscan
-      entry: agentscan scan . --fail-on HIGH
+    - id: agentscanner
+      name: agentscanner
+      entry: agentscanner scan . --fail-on HIGH
       language: system
       pass_filenames: false
 ```
