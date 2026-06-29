@@ -1,0 +1,17 @@
+/* Dark navy blue primary — overrides mkdocs-material's custom primary slot */
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:        #0a1628;
+  --md-primary-fg-color--light: #1a3050;
+  --md-primary-fg-color--dark:  #060e1c;
+  --md-primary-bg-color:        #ffffff;
+  --md-primary-bg-color--light: rgba(255, 255, 255, 0.7);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        #0d1f3c;
+  --md-primary-fg-color--light: #1e3a5f;
+  --md-primary-fg-color--dark:  #060e1c;
+  --md-primary-bg-color:        #ffffff;
+  --md-primary-bg-color--light: rgba(255, 255, 255, 0.7);
+}
