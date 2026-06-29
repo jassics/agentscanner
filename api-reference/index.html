@@ -762,6 +762,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.engine.filter_by_threshold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        filter_by_threshold
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.engine.run_checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run_checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -803,6 +831,67 @@
   
     <nav class="md-nav" aria-label="base">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.checks.base.Check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Check">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.checks.base.Check.analyze" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        analyze
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.checks.base.Check.finding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        finding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.checks.base.get_checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.checks.base.register" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        register
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#hooks" class="md-nav__link">
@@ -1153,6 +1242,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.engine.filter_by_threshold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        filter_by_threshold
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.engine.run_checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run_checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1194,6 +1311,67 @@
   
     <nav class="md-nav" aria-label="base">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.checks.base.Check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Check">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.checks.base.Check.analyze" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        analyze
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.checks.base.Check.finding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        finding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.checks.base.get_checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agentscanner.checks.base.register" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        register
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#hooks" class="md-nav__link">
@@ -1944,6 +2122,259 @@ resource is tagged with its Scope.</p>
 
 
 
+<div class="doc doc-object doc-function">
+
+
+<h3 id="agentscanner.engine.filter_by_threshold" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">filter_by_threshold</span><span class="p">(</span><span class="n">findings</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span></code>
+
+<a href="#agentscanner.engine.filter_by_threshold" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return only findings at or above <em>threshold</em> severity.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/agentscanner/engine.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-64">64</a></span>
+<span class="normal"><a href="#__codelineno-0-65">65</a></span>
+<span class="normal"><a href="#__codelineno-0-66">66</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-64" name="__codelineno-0-64"></a><span class="k">def</span><span class="w"> </span><span class="nf">filter_by_threshold</span><span class="p">(</span><span class="n">findings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Finding</span><span class="p">],</span> <span class="n">threshold</span><span class="p">:</span> <span class="n">Severity</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Finding</span><span class="p">]:</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return only findings at or above *threshold* severity.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">findings</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">severity</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="agentscanner.engine.run_checks" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">run_checks</span><span class="p">(</span><span class="n">resources</span><span class="p">,</span> <span class="n">only</span><span class="o">=</span><span class="p">(),</span> <span class="n">skip</span><span class="o">=</span><span class="p">())</span></code>
+
+<a href="#agentscanner.engine.run_checks" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Run all registered checks against <em>resources</em> and return sorted findings.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>resources</code>
+            </td>
+            <td>
+                  <code><span title="typing.Iterable">Iterable</span>[<a class="autorefs autorefs-internal" title="Resource
+
+
+  
+      dataclass
+   (agentscanner.models.Resource)" href="#agentscanner.models.Resource">Resource</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Parsed artifacts from :func:<code>~agentscanner.discovery.discover</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>only</code>
+            </td>
+            <td>
+                  <code><span title="typing.Iterable">Iterable</span>[<span title="str">str</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If non-empty, run only checks whose IDs are in this iterable.</p>
+              </div>
+            </td>
+            <td>
+                  <code>()</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>skip</code>
+            </td>
+            <td>
+                  <code><span title="typing.Iterable">Iterable</span>[<span title="str">str</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Check IDs to exclude from the run.</p>
+              </div>
+            </td>
+            <td>
+                  <code>()</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing.List">List</span>[<span title="agentscanner.models.Finding">Finding</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Findings sorted by descending severity, then check ID, then file path.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="typing.List">List</span>[<span title="agentscanner.models.Finding">Finding</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A buggy check never aborts the scan — it produces an INFO finding instead.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/agentscanner/engine.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#__codelineno-0-56">56</a></span>
+<span class="normal"><a href="#__codelineno-0-57">57</a></span>
+<span class="normal"><a href="#__codelineno-0-58">58</a></span>
+<span class="normal"><a href="#__codelineno-0-59">59</a></span>
+<span class="normal"><a href="#__codelineno-0-60">60</a></span>
+<span class="normal"><a href="#__codelineno-0-61">61</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">run_checks</span><span class="p">(</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="n">resources</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Resource</span><span class="p">],</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>    <span class="n">only</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(),</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>    <span class="n">skip</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(),</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Finding</span><span class="p">]:</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Run all registered checks against *resources* and return sorted findings.</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="sd">    Args:</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="sd">        resources: Parsed artifacts from :func:`~agentscanner.discovery.discover`.</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="sd">        only: If non-empty, run only checks whose IDs are in this iterable.</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="sd">        skip: Check IDs to exclude from the run.</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="sd">    Returns:</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="sd">        Findings sorted by descending severity, then check ID, then file path.</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="sd">        A buggy check never aborts the scan — it produces an INFO finding instead.</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>    <span class="n">checks</span> <span class="o">=</span> <span class="n">get_checks</span><span class="p">(</span><span class="n">only</span><span class="o">=</span><span class="n">only</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">)</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>    <span class="n">findings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Finding</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>    <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resources</span><span class="p">:</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>        <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">parse_error</span><span class="p">:</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>            <span class="n">findings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>                <span class="n">Finding</span><span class="p">(</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>                    <span class="n">check_id</span><span class="o">=</span><span class="s2">&quot;CC-PARSE-000&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>                    <span class="n">severity</span><span class="o">=</span><span class="n">Severity</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>                    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Artifact could not be parsed&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>                    <span class="n">message</span><span class="o">=</span><span class="n">resource</span><span class="o">.</span><span class="n">parse_error</span><span class="p">,</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a>                    <span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a>                    <span class="n">line</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a>                    <span class="n">remediation</span><span class="o">=</span><span class="s2">&quot;Fix the syntax so the file can be security-scanned.&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a>                    <span class="n">framework</span><span class="o">=</span><span class="s2">&quot;Operational&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a>                <span class="p">)</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a>            <span class="p">)</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>            <span class="k">continue</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a>        <span class="k">for</span> <span class="n">check</span> <span class="ow">in</span> <span class="n">checks</span><span class="p">:</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a>            <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">check</span><span class="o">.</span><span class="n">applies_to</span><span class="p">:</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a>                <span class="k">continue</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a>            <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a>                <span class="n">findings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">check</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">resource</span><span class="p">))</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a>            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># a buggy check must never abort the scan</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50"></a>                <span class="n">findings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a>                    <span class="n">Finding</span><span class="p">(</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a>                        <span class="n">check_id</span><span class="o">=</span><span class="n">check</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53"></a>                        <span class="n">severity</span><span class="o">=</span><span class="n">Severity</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54"></a>                        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Check raised an error&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55"></a>                        <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">check</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> failed on this resource: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56"></a>                        <span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57"></a>                    <span class="p">)</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58"></a>                <span class="p">)</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59"></a>
+<a id="__codelineno-0-60" name="__codelineno-0-60"></a>    <span class="n">findings</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">severity</span><span class="p">),</span> <span class="n">f</span><span class="o">.</span><span class="n">check_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">path</span><span class="p">)))</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61"></a>    <span class="k">return</span> <span class="n">findings</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
 
 
   </div>
@@ -1989,6 +2420,382 @@ engine instantiates every registered check once and dispatches resources to it.<
 
 
 
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="agentscanner.checks.base.Check" class="doc doc-heading">
+            <code>Check</code>
+
+
+<a href="#agentscanner.checks.base.Check" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+
+
+        <p>Abstract base class for all agentscanner checks.</p>
+<p>Subclass this, declare the class attributes, implement :meth:<code>analyze</code>,
+and decorate with :func:<code>register</code> to add a check to the scanner.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="agentscanner.checks.base.Check.id">id</span></code></td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Unique check identifier (e.g. <code>AS-HOOK-001</code>).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="agentscanner.checks.base.Check.severity">severity</span></code></td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="Severity (agentscanner.models.Severity)" href="#agentscanner.models.Severity">Severity</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Default severity for findings emitted by this check.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="agentscanner.checks.base.Check.title">title</span></code></td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Short human-readable name shown in the CLI table.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="agentscanner.checks.base.Check.applies_to">applies_to</span></code></td>
+            <td>
+                  <code><span title="typing.Set">Set</span>[<span title="agentscanner.models.ArtifactType">ArtifactType</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Artifact types this check runs against.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="agentscanner.checks.base.Check.remediation">remediation</span></code></td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Actionable fix guidance included in every finding.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="agentscanner.checks.base.Check.framework">framework</span></code></td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Comma-separated OWASP/NIST framework references.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+              <details class="mkdocstrings-source">
+                <summary>Source code in <code>src/agentscanner/checks/base.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#__codelineno-0-52">52</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="k">class</span><span class="w"> </span><span class="nc">Check</span><span class="p">:</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract base class for all agentscanner checks.</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="sd">    Subclass this, declare the class attributes, implement :meth:`analyze`,</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="sd">    and decorate with :func:`register` to add a check to the scanner.</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="sd">    Attributes:</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="sd">        id: Unique check identifier (e.g. ``AS-HOOK-001``).</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="sd">        severity: Default severity for findings emitted by this check.</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="sd">        title: Short human-readable name shown in the CLI table.</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="sd">        applies_to: Artifact types this check runs against.</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="sd">        remediation: Actionable fix guidance included in every finding.</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="sd">        framework: Comma-separated OWASP/NIST framework references.</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>    <span class="n">severity</span><span class="p">:</span> <span class="n">Severity</span> <span class="o">=</span> <span class="n">Severity</span><span class="o">.</span><span class="n">MEDIUM</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>    <span class="n">applies_to</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">ArtifactType</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>    <span class="n">remediation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>    <span class="n">framework</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">:</span> <span class="n">Resource</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Finding</span><span class="p">]:</span>  <span class="c1"># pragma: no cover</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Inspect *resource* and yield zero or more :class:`~agentscanner.models.Finding` objects.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">finding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">:</span> <span class="n">Resource</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Finding</span><span class="p">:</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Build a :class:`~agentscanner.models.Finding` pre-populated with this check&#39;s metadata.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>        <span class="k">return</span> <span class="n">Finding</span><span class="p">(</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a>            <span class="n">check_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a>            <span class="n">severity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">severity</span><span class="p">,</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a>            <span class="n">title</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a>            <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a>            <span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a>            <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">,</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50"></a>            <span class="n">remediation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">remediation</span><span class="p">,</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a>            <span class="n">framework</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">framework</span><span class="p">,</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a>        <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="agentscanner.checks.base.Check.analyze" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">analyze</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span></code>
+
+<a href="#agentscanner.checks.base.Check.analyze" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Inspect <em>resource</em> and yield zero or more :class:<code>~agentscanner.models.Finding</code> objects.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/agentscanner/checks/base.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="k">def</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">:</span> <span class="n">Resource</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Finding</span><span class="p">]:</span>  <span class="c1"># pragma: no cover</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Inspect *resource* and yield zero or more :class:`~agentscanner.models.Finding` objects.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a>    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="agentscanner.checks.base.Check.finding" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">finding</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+
+<a href="#agentscanner.checks.base.Check.finding" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Build a :class:<code>~agentscanner.models.Finding</code> pre-populated with this check's metadata.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/agentscanner/checks/base.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#__codelineno-0-52">52</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="k">def</span><span class="w"> </span><span class="nf">finding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">:</span> <span class="n">Resource</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Finding</span><span class="p">:</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Build a :class:`~agentscanner.models.Finding` pre-populated with this check&#39;s metadata.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>    <span class="k">return</span> <span class="n">Finding</span><span class="p">(</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a>        <span class="n">check_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a>        <span class="n">severity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">severity</span><span class="p">,</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a>        <span class="n">title</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a>        <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a>        <span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a>        <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">,</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50"></a>        <span class="n">remediation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">remediation</span><span class="p">,</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a>        <span class="n">framework</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">framework</span><span class="p">,</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a>    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="agentscanner.checks.base.get_checks" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_checks</span><span class="p">(</span><span class="n">only</span><span class="o">=</span><span class="p">(),</span> <span class="n">skip</span><span class="o">=</span><span class="p">())</span></code>
+
+<a href="#agentscanner.checks.base.get_checks" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return registered checks filtered by <em>only</em> / <em>skip</em> ID sets, sorted by ID.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/agentscanner/checks/base.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-69">69</a></span>
+<span class="normal"><a href="#__codelineno-0-70">70</a></span>
+<span class="normal"><a href="#__codelineno-0-71">71</a></span>
+<span class="normal"><a href="#__codelineno-0-72">72</a></span>
+<span class="normal"><a href="#__codelineno-0-73">73</a></span>
+<span class="normal"><a href="#__codelineno-0-74">74</a></span>
+<span class="normal"><a href="#__codelineno-0-75">75</a></span>
+<span class="normal"><a href="#__codelineno-0-76">76</a></span>
+<span class="normal"><a href="#__codelineno-0-77">77</a></span>
+<span class="normal"><a href="#__codelineno-0-78">78</a></span>
+<span class="normal"><a href="#__codelineno-0-79">79</a></span>
+<span class="normal"><a href="#__codelineno-0-80">80</a></span>
+<span class="normal"><a href="#__codelineno-0-81">81</a></span>
+<span class="normal"><a href="#__codelineno-0-82">82</a></span>
+<span class="normal"><a href="#__codelineno-0-83">83</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-69" name="__codelineno-0-69"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_checks</span><span class="p">(</span>
+<a id="__codelineno-0-70" name="__codelineno-0-70"></a>    <span class="n">only</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(),</span>
+<a id="__codelineno-0-71" name="__codelineno-0-71"></a>    <span class="n">skip</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(),</span>
+<a id="__codelineno-0-72" name="__codelineno-0-72"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Check</span><span class="p">]:</span>
+<a id="__codelineno-0-73" name="__codelineno-0-73"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return registered checks filtered by *only* / *skip* ID sets, sorted by ID.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-74" name="__codelineno-0-74"></a>    <span class="n">only_set</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">only</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">strip</span><span class="p">()}</span>
+<a id="__codelineno-0-75" name="__codelineno-0-75"></a>    <span class="n">skip_set</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">skip</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">strip</span><span class="p">()}</span>
+<a id="__codelineno-0-76" name="__codelineno-0-76"></a>    <span class="n">checks</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-77" name="__codelineno-0-77"></a>    <span class="k">for</span> <span class="n">cid</span><span class="p">,</span> <span class="n">chk</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">CHECK_REGISTRY</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+<a id="__codelineno-0-78" name="__codelineno-0-78"></a>        <span class="k">if</span> <span class="n">only_set</span> <span class="ow">and</span> <span class="n">cid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">only_set</span><span class="p">:</span>
+<a id="__codelineno-0-79" name="__codelineno-0-79"></a>            <span class="k">continue</span>
+<a id="__codelineno-0-80" name="__codelineno-0-80"></a>        <span class="k">if</span> <span class="n">cid</span> <span class="ow">in</span> <span class="n">skip_set</span><span class="p">:</span>
+<a id="__codelineno-0-81" name="__codelineno-0-81"></a>            <span class="k">continue</span>
+<a id="__codelineno-0-82" name="__codelineno-0-82"></a>        <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chk</span><span class="p">)</span>
+<a id="__codelineno-0-83" name="__codelineno-0-83"></a>    <span class="k">return</span> <span class="n">checks</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="agentscanner.checks.base.register" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">register</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span></code>
+
+<a href="#agentscanner.checks.base.register" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Class decorator that instantiates and registers a :class:<code>Check</code> subclass.</p>
+<p>Raises <code>ValueError</code> if the check has no <code>id</code> or its ID is already taken.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/agentscanner/checks/base.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#__codelineno-0-56">56</a></span>
+<span class="normal"><a href="#__codelineno-0-57">57</a></span>
+<span class="normal"><a href="#__codelineno-0-58">58</a></span>
+<span class="normal"><a href="#__codelineno-0-59">59</a></span>
+<span class="normal"><a href="#__codelineno-0-60">60</a></span>
+<span class="normal"><a href="#__codelineno-0-61">61</a></span>
+<span class="normal"><a href="#__codelineno-0-62">62</a></span>
+<span class="normal"><a href="#__codelineno-0-63">63</a></span>
+<span class="normal"><a href="#__codelineno-0-64">64</a></span>
+<span class="normal"><a href="#__codelineno-0-65">65</a></span>
+<span class="normal"><a href="#__codelineno-0-66">66</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-55" name="__codelineno-0-55"></a><span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Check</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">[</span><span class="n">Check</span><span class="p">]:</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Class decorator that instantiates and registers a :class:`Check` subclass.</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57"></a>
+<a id="__codelineno-0-58" name="__codelineno-0-58"></a><span class="sd">    Raises ``ValueError`` if the check has no ``id`` or its ID is already taken.</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60"></a>    <span class="n">inst</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">inst</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+<a id="__codelineno-0-62" name="__codelineno-0-62"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> missing id&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-63" name="__codelineno-0-63"></a>    <span class="k">if</span> <span class="n">inst</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">CHECK_REGISTRY</span><span class="p">:</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;duplicate check id </span><span class="si">{</span><span class="n">inst</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65"></a>    <span class="n">CHECK_REGISTRY</span><span class="p">[</span><span class="n">inst</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">inst</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66"></a>    <span class="k">return</span> <span class="bp">cls</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
 
 
 
