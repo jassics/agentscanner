@@ -1,0 +1,74 @@
+site_name: agentscanner
+site_description: Static security scanner for Claude Code configuration — settings, permissions, hooks, MCP servers, agents, skills, and steering files.
+site_url: https://jassics.github.io/agentscanner
+repo_url: https://github.com/jassics/agentscanner
+repo_name: jassics/agentscanner
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.action.edit
+    - search.highlight
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - Home: index.md
+  - Check Catalog: checks.md
+  - Architecture: architecture.md
+  - CI Integration: ci-integration.md
+  - Hardened Baseline: hardened-baseline.md
+  - Contributing: contributing.md
+  - API Reference: api-reference.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: true
+            show_root_heading: true
+            docstring_style: google
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/jassics/agentscanner
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/agentscanner/
