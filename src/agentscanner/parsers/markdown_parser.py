@@ -17,6 +17,12 @@ _FRONTMATTER = re.compile(r"^---\s*\n(.*?)\n---\s*\n?(.*)$", re.DOTALL)
 
 
 def parse_markdown(path: Path, scope: Scope, artifact_type: ArtifactType) -> Resource:
+    """Read and parse a Markdown artifact into a :class:`~agentscanner.models.Resource`.
+
+    Splits YAML frontmatter from the body. Frontmatter is loaded with
+    ``yaml.safe_load``; the body is kept as raw text for prompt-content checks.
+    On YAML parse failure ``parse_error`` is set and ``frontmatter`` is ``{}``.
+    """
     raw = path.read_text(encoding="utf-8", errors="replace")
     res = Resource(type=artifact_type, path=path, scope=scope, raw_text=raw)
 

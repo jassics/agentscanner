@@ -27,6 +27,7 @@ ENV_REFERENCE = re.compile(r"^\s*(\$\{[^}]+\}|\$[A-Za-z_][A-Za-z0-9_]*|<[^>]+>|\
 
 
 def is_env_reference(value: str) -> bool:
+    """Return True if *value* is a shell/env placeholder rather than a literal secret."""
     return bool(ENV_REFERENCE.match(value or ""))
 
 

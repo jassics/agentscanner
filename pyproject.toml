@@ -27,6 +27,7 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/jassics/agentscanner"
+Documentation = "https://jassics.github.io/agentscanner"
 Issues = "https://github.com/jassics/agentscanner/issues"
 
 [project.scripts]

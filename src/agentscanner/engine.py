@@ -12,6 +12,17 @@ def run_checks(
     only: Iterable[str] = (),
     skip: Iterable[str] = (),
 ) -> List[Finding]:
+    """Run all registered checks against *resources* and return sorted findings.
+
+    Args:
+        resources: Parsed artifacts from :func:`~agentscanner.discovery.discover`.
+        only: If non-empty, run only checks whose IDs are in this iterable.
+        skip: Check IDs to exclude from the run.
+
+    Returns:
+        Findings sorted by descending severity, then check ID, then file path.
+        A buggy check never aborts the scan — it produces an INFO finding instead.
+    """
     checks = get_checks(only=only, skip=skip)
     findings: List[Finding] = []
 
@@ -51,4 +62,5 @@ def run_checks(
 
 
 def filter_by_threshold(findings: List[Finding], threshold: Severity) -> List[Finding]:
+    """Return only findings at or above *threshold* severity."""
     return [f for f in findings if f.severity >= threshold]

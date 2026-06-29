@@ -28,6 +28,11 @@ def _loads_tolerant(text: str):
 
 
 def parse_json(path: Path, scope: Scope, artifact_type: ArtifactType) -> Resource:
+    """Read and parse a JSON config file into a :class:`~agentscanner.models.Resource`.
+
+    Tolerates JSONC-style comments and trailing commas. On parse failure the
+    resource is returned with ``parse_error`` set rather than raising.
+    """
     raw = path.read_text(encoding="utf-8", errors="replace")
     res = Resource(type=artifact_type, path=path, scope=scope, raw_text=raw)
     try:
