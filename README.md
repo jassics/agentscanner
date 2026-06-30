@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.png" alt="agentscanner — static security scanner for Claude Code configuration" width="100%">
+</p>
+
 # agentscanner
 
 **Static security scanner for Claude Code configuration** — settings,

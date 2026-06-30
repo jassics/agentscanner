@@ -1,3 +1,5 @@
+![agentscanner — static security scanner for Claude Code configuration](assets/banner.png){ width="100%" }
+
 # agentscanner
 
 **Static security scanner for Claude Code configuration** — settings, permissions, hooks, MCP servers, agents/subagents, skills, slash commands, and `CLAUDE.md`. Think *Checkov / Terrascan, but for your `.claude/` directory.*
