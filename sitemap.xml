@@ -2,30 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://jassics.github.io/agentscanner/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-06-30</lastmod>
     </url>
     <url>
          <loc>https://jassics.github.io/agentscanner/api-reference/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-06-30</lastmod>
     </url>
     <url>
          <loc>https://jassics.github.io/agentscanner/architecture/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-06-30</lastmod>
     </url>
     <url>
          <loc>https://jassics.github.io/agentscanner/checks/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-06-30</lastmod>
     </url>
     <url>
          <loc>https://jassics.github.io/agentscanner/ci-integration/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-06-30</lastmod>
     </url>
     <url>
          <loc>https://jassics.github.io/agentscanner/contributing/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-06-30</lastmod>
     </url>
     <url>
          <loc>https://jassics.github.io/agentscanner/hardened-baseline/</loc>
-         <lastmod>2026-06-29</lastmod>
+         <lastmod>2026-06-30</lastmod>
     </url>
 </urlset>
