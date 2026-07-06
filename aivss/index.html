@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://jassics.github.io/agentscanner/ci-integration/">
+        <link rel="canonical" href="https://jassics.github.io/agentscanner/aivss/">
       
       
-        <link rel="prev" href="../architecture/">
+        <link rel="prev" href="../checks/">
       
       
-        <link rel="next" href="../hardened-baseline/">
+        <link rel="next" href="../architecture/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>CI Integration - agentscanner</title>
+        <title>AIVSS Scoring - agentscanner</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ci-integration" class="md-skip">
+        <a href="#aivss-agentic-scoring" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              CI Integration
+              AIVSS Scoring
             
           </span>
         </div>
@@ -263,9 +263,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../aivss/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -301,11 +303,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../ci-integration/" class="md-tabs__link">
         
   
   
@@ -478,10 +478,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../aivss/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AIVSS Scoring
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -497,6 +524,81 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-not-just-severity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why not just severity?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-we-implemented-and-what-we-didnt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What we implemented — and what we didn't
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#per-check-aars-values-are-ours-not-the-specs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-check AARS values are ours, not the spec's
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reproducing-the-number" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproducing the number
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -532,37 +634,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    CI Integration
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../ci-integration/" class="md-nav__link">
         
   
   
@@ -578,81 +653,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#cli-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        CLI reference
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#github-actions-sarif-upload" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GitHub Actions — SARIF upload
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pre-commit-hook" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        pre-commit hook
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#json-output-for-custom-pipelines" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        JSON output for custom pipelines
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#severity-threshold-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Severity threshold reference
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -765,10 +765,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#cli-reference" class="md-nav__link">
+  <a href="#why-not-just-severity" class="md-nav__link">
     <span class="md-ellipsis">
       
-        CLI reference
+        Why not just severity?
       
     </span>
   </a>
@@ -776,10 +776,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#github-actions-sarif-upload" class="md-nav__link">
+  <a href="#what-we-implemented-and-what-we-didnt" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GitHub Actions — SARIF upload
+        What we implemented — and what we didn't
       
     </span>
   </a>
@@ -787,10 +787,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pre-commit-hook" class="md-nav__link">
+  <a href="#per-check-aars-values-are-ours-not-the-specs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        pre-commit hook
+        Per-check AARS values are ours, not the spec's
       
     </span>
   </a>
@@ -798,10 +798,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#json-output-for-custom-pipelines" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        JSON output for custom pipelines
+        Usage
       
     </span>
   </a>
@@ -809,10 +809,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#severity-threshold-reference" class="md-nav__link">
+  <a href="#reproducing-the-number" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Severity threshold reference
+        Reproducing the number
       
     </span>
   </a>
@@ -836,7 +836,7 @@
 
 
   
-    <a href="https://github.com/jassics/agentscanner/edit/main/docs/ci-integration.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/jassics/agentscanner/edit/main/docs/aivss.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -844,111 +844,82 @@
   
 
 
-<h1 id="ci-integration">CI Integration<a class="headerlink" href="#ci-integration" title="Permanent link">&para;</a></h1>
-<h2 id="cli-reference">CLI reference<a class="headerlink" href="#cli-reference" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>agentscanner scan [PATH]
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  --include-user              also scan ~/.claude (user scope)
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  --framework all|settings|hooks|mcp|agents|skills|prompts
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  --check AS-HOOK-001,...     run only these checks
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  --skip-check AS-PERM-003,...  skip these checks
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  --severity-threshold HIGH   only report findings &gt;= threshold
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  --output cli|json|sarif     output format (default: cli)
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  --output-file results.sarif write output to file
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  --fail-on HIGH              exit nonzero if any finding &gt;= level
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  --soft-fail                 always exit 0 (useful for SARIF-only pipelines)
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>agentscanner list-checks      print catalog (id, severity, title)
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>agentscanner version
+<h1 id="aivss-agentic-scoring">AIVSS-Agentic scoring<a class="headerlink" href="#aivss-agentic-scoring" title="Permanent link">&para;</a></h1>
+<p><code>agentscanner scan --aivss</code> adds an <a href="https://aivss.owasp.org">OWASP AIVSS</a> score to every finding — a risk score purpose-built for agentic systems, on top of (not instead of) each check's normal <code>Severity</code>.</p>
+<h2 id="why-not-just-severity">Why not just severity?<a class="headerlink" href="#why-not-just-severity" title="Permanent link">&para;</a></h2>
+<p><code>Severity</code> (CRITICAL/HIGH/MEDIUM/LOW) tells you how bad a check is in isolation. It does not distinguish "this misconfiguration exists in a system with no autonomy, no persistent memory, no tool access" from "this misconfiguration exists in a system that can act on its own, remember across sessions, and call arbitrary tools." AIVSS is designed specifically to capture that second dimension — how much an agent's own capabilities amplify a given flaw.</p>
+<h2 id="what-we-implemented-and-what-we-didnt">What we implemented — and what we didn't<a class="headerlink" href="#what-we-implemented-and-what-we-didnt" title="Permanent link">&para;</a></h2>
+<p>The official formula, source: <em>AIVSS Scoring System For OWASP Agentic AI Core Security Risks v0.5</em> (<a href="https://aivss.owasp.org/assets/publications/AIVSS%20Scoring%20System%20For%20OWASP%20Agentic%20AI%20Core%20Security%20Risks%20v0.5.pdf">spec</a>; also referenced conceptually in <code>OWASP-Top-10-for-Agentic-Applications-2026-12.6-1.pdf</code> in the local GenAI study library, which cross-maps its ASI Top 10 entries to AIVSS Core Risk categories):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>AIVSS_Score = ((CVSS_Base_Score + AARS) / 2) x ThM
 </code></pre></div>
-<hr />
-<h2 id="github-actions-sarif-upload">GitHub Actions — SARIF upload<a class="headerlink" href="#github-actions-sarif-upload" title="Permanent link">&para;</a></h2>
-<p>Upload findings to GitHub code scanning so they appear as security alerts on PRs and in the Security tab.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">agentscanner</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nt">on</span><span class="p">:</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">push</span><span class="p">:</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">main</span><span class="p p-Indicator">]</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nt">jobs</span><span class="p">:</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="nt">scan</span><span class="p">:</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="nt">permissions</span><span class="p">:</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">      </span><span class="nt">security-events</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
-<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pipx install agentscanner</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">agentscanner scan . --output sarif --output-file agentscanner.sarif --soft-fail</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">github/codeql-action/upload-sarif@v3</span>
-<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">          </span><span class="nt">sarif_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">agentscanner.sarif</span>
-</code></pre></div>
-<p><code>--soft-fail</code> ensures the workflow step exits 0 so SARIF upload always runs, even when findings exist. The alerts surface in GitHub's Security tab instead of blocking the workflow step.</p>
-<p>To block PRs on HIGH+ findings, drop <code>--soft-fail</code> and add <code>--fail-on HIGH</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">agentscanner scan . --output sarif --output-file agentscanner.sarif --fail-on HIGH</span>
-</code></pre></div>
-<hr />
-<h2 id="pre-commit-hook">pre-commit hook<a class="headerlink" href="#pre-commit-hook" title="Permanent link">&para;</a></h2>
-<p>Block commits that introduce HIGH or above findings:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># .pre-commit-config.yaml</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">repos</span><span class="p">:</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">hooks</span><span class="p">:</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">agentscanner</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">agentscanner</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">agentscanner scan . --fail-on HIGH</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">        </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">        </span><span class="nt">pass_filenames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</code></pre></div>
-<p>Install with:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>pre-commit
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>pre-commit<span class="w"> </span>install
-</code></pre></div>
-<hr />
-<h2 id="json-output-for-custom-pipelines">JSON output for custom pipelines<a class="headerlink" href="#json-output-for-custom-pipelines" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>agentscanner<span class="w"> </span>scan<span class="w"> </span>.<span class="w"> </span>--output<span class="w"> </span>json<span class="w"> </span>--output-file<span class="w"> </span>findings.json
-</code></pre></div>
-<p>Output schema:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">[</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="p">{</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;check_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AS-HOOK-001&quot;</span><span class="p">,</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nt">&quot;severity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CRITICAL&quot;</span><span class="p">,</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hook fetches and executes remote code&quot;</span><span class="p">,</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="nt">&quot;file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.claude/settings.json&quot;</span><span class="p">,</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="nt">&quot;resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hooks[0].command&quot;</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">]</span>
-</code></pre></div>
-<hr />
-<h2 id="severity-threshold-reference">Severity threshold reference<a class="headerlink" href="#severity-threshold-reference" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>AARS</strong> (Agentic AI Risk Score) — the sum of 10 official factors, each scored 0.0 / 0.5 / 1.0: <code>autonomyOfAction</code>, <code>toolUse</code>, <code>memoryUse</code>, <code>dynamicIdentity</code>, <code>multiAgentInteractions</code>, <code>nonDeterminism</code>, <code>selfModification</code>, <code>goalDrivenPlanning</code>, <code>contextualAwareness</code>, <code>opacityAndReflexivity</code>. <strong>We implemented this in full</strong> — <code>src/agentscanner/aivss.py</code> uses the official factor names and 0/0.5/1 scale.</li>
+<li><strong>ThM</strong> (Threat Multiplier) — defaults to the spec's own recommended starting point, <code>0.97</code> ("exploit technique known, not confirmed weaponized"). Override with <code>--aivss-thm</code> (spec guidance: <code>1.0</code> if actively exploited in the wild, <code>~0.91</code> if no known exploit exists).</li>
+<li><strong>CVSS_Base_Score</strong> — <strong>we deliberately did not build a full CVSS v4.0 calculator.</strong> That requires per-instance exploitability metrics (attack vector, attack complexity, privileges required, user interaction, scope, ...) that a static config scanner does not have — our findings are misconfigurations, not a specific exploited flaw in a specific running instance. A hand-rolled CVSS v4.0 macro-vector engine fed with fabricated instance data would produce false precision, not accuracy. Instead, each check's existing <code>Severity</code> is anchored to the score NVD itself uses as the midpoint of the equivalent qualitative CVSS band: <code>CRITICAL→9.5, HIGH→7.5, MEDIUM→5.5, LOW→2.5</code>. This is a documented approximation — recompute per-instance with the real CVSS v4.0 calculator if you need a fully official number for a specific finding.</li>
+</ul>
+<h2 id="per-check-aars-values-are-ours-not-the-specs">Per-check AARS values are ours, not the spec's<a class="headerlink" href="#per-check-aars-values-are-ours-not-the-specs" title="Permanent link">&para;</a></h2>
+<p>The v0.5 spec scores its own 10 <strong>Core Risk categories</strong> (e.g. "Agentic AI Tool Misuse", AARS=8.5) via expert threat-modeling worked examples — it does not score arbitrary third-party scanner checks. To keep our numbers reproducible rather than inventing 29 bespoke justifications, each check is mapped to one of 7 <strong>archetypes</strong> — a shared 10-factor vector representing a common agentic blast-radius pattern:</p>
 <table>
 <thead>
 <tr>
-<th>Flag value</th>
-<th>Findings reported</th>
+<th>Archetype</th>
+<th>Represents</th>
+<th>Example checks</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>CRITICAL</code></td>
-<td>CRITICAL only</td>
+<td><code>remote_exec</code></td>
+<td>External actor gets code running with the agent's tool access</td>
+<td><code>AS-HOOK-001</code>, <code>AS-SKILL-007</code>, <code>AS-DEP-001</code>, <code>AS-MCP-004/005</code></td>
 </tr>
 <tr>
-<td><code>HIGH</code></td>
-<td>HIGH + CRITICAL</td>
+<td><code>excessive_privilege</code></td>
+<td>Artifact grants broader standing authority than the task needs</td>
+<td><code>AS-PERM-001/002</code>, <code>AS-AGENT-001</code>, <code>AS-SKILL-004/005/008</code></td>
 </tr>
 <tr>
-<td><code>MEDIUM</code></td>
-<td>MEDIUM + HIGH + CRITICAL</td>
+<td><code>injection_surface</code></td>
+<td>Untrusted content can redirect agent behavior via context it's designed to act on</td>
+<td><code>AS-PROMPT-001</code>, <code>AS-HOOK-003</code>, <code>AS-SKILL-002/010</code></td>
 </tr>
 <tr>
-<td><code>LOW</code></td>
-<td>All findings</td>
+<td><code>data_exposure</code></td>
+<td>Secret/sensitive data reachable by the agent or crossing the trust boundary</td>
+<td><code>AS-MCP-001/002</code>, <code>AS-ENV-001</code>, <code>AS-SECRET-001</code></td>
+</tr>
+<tr>
+<td><code>persistence</code></td>
+<td>Compromise survives beyond a single session or skill install</td>
+<td><code>AS-SKILL-001</code></td>
+</tr>
+<tr>
+<td><code>governance_gap</code></td>
+<td>Missing provenance/signature/version — not an active exploit, removes detectability</td>
+<td><code>AS-SKILL-003/006/009/011/012</code></td>
+</tr>
+<tr>
+<td><code>hygiene</code></td>
+<td>Real but low agentic amplification (bounds blast radius rather than enabling it)</td>
+<td><code>AS-HOOK-004</code></td>
 </tr>
 </tbody>
 </table>
-<p>Default (no flag): all findings are reported. <code>--fail-on</code> follows the same ladder: <code>--fail-on HIGH</code> exits nonzero only if a HIGH or CRITICAL finding exists.</p>
+<p>The full mapping and vectors are in <code>src/agentscanner/aivss.py</code> (<code>CHECK_ARCHETYPES</code>, <code>_ARCHETYPES</code>) — read the source, not this table, for the authoritative values; a test (<code>tests/test_aivss.py::test_every_registered_check_has_an_archetype</code>) fails CI if a new check ships without one.</p>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>agentscanner<span class="w"> </span>scan<span class="w"> </span>.<span class="w"> </span>--aivss<span class="w">                       </span><span class="c1"># add AIVSS column/field, default ThM=0.97</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>agentscanner<span class="w"> </span>scan<span class="w"> </span>.<span class="w"> </span>--aivss<span class="w"> </span>--aivss-thm<span class="w"> </span><span class="m">1</span>.0<span class="w">        </span><span class="c1"># known actively-exploited technique</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>agentscanner<span class="w"> </span>scan<span class="w"> </span>.<span class="w"> </span>--aivss<span class="w"> </span>--output<span class="w"> </span>json<span class="w">          </span><span class="c1"># adds an &quot;aivss&quot; object per finding</span>
+</code></pre></div>
+<p>Not yet in <code>--output sarif</code> — SARIF 2.1.0's result shape doesn't have a natural slot for a second numeric score; open to adding it as a property bag if that's useful.</p>
+<h2 id="reproducing-the-number">Reproducing the number<a class="headerlink" href="#reproducing-the-number" title="Permanent link">&para;</a></h2>
+<p>Given a check ID, severity, and ThM, the score is pure arithmetic — no LLM call, no network, no randomness:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">agentscanner</span><span class="w"> </span><span class="kn">import</span> <span class="n">aivss</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">agentscanner.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Severity</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">result</span> <span class="o">=</span> <span class="n">aivss</span><span class="o">.</span><span class="n">score_finding</span><span class="p">(</span><span class="s2">&quot;AS-HOOK-001&quot;</span><span class="p">,</span> <span class="n">Severity</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">,</span> <span class="n">thm</span><span class="o">=</span><span class="mf">0.97</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">score</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">vector</span><span class="p">)</span>  <span class="c1"># 7.0 (CVSS:9.5/AARS:5.0)xThM:0.97</span>
+</code></pre></div>
 
 
 
