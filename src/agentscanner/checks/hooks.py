@@ -21,6 +21,8 @@ CONTEXT_INJECTING = {
 _NETWORK = re.compile(r"(?i)\b(curl|wget|nc|ncat|netcat|ssh|scp|telnet|http[s]?://)\b")
 _UNTRUSTED_PATH = re.compile(r"(?:^|\s)(?:\./|\.\./|/tmp/|/var/tmp/|/dev/shm/)")
 _SCRIPT_TOKEN = re.compile(r"([^\s'\"]+\.(?:py|sh|js|rb|pl|ps1))")
+_MEMORY_PATH = re.compile(r"(?i)\b[\w./~-]*\b(claude\.md|memory\.md|soul\.md|agents\.md|\.claude/memory[\w./-]*)\b")
+_WRITE_REDIRECT = re.compile(r">>|>(?!=)|\btee\b")
 
 
 def iter_hooks(resource) -> Iterator[Tuple[str, dict]]:
@@ -108,6 +110,7 @@ class HookContextInjectionNetwork(Check):
     id = "AS-HOOK-003"
     severity = Severity.MEDIUM
     title = "Context-injecting hook makes network calls"
+    model_sensitive = True
     applies_to = {ArtifactType.SETTINGS, ArtifactType.AGENT}
     framework = "OWASP LLM01 Prompt Injection"
     remediation = (
@@ -125,6 +128,36 @@ class HookContextInjectionNetwork(Check):
                 yield self.finding(
                     resource,
                     f"{event} hook injects context and makes a network call: {cmd!r}",
+                    line=resource.line_of(cmd[:40]),
+                )
+
+
+@register
+class HookMemoryPoisoning(Check):
+    id = "AS-HOOK-005"
+    severity = Severity.HIGH
+    title = "Hook writes fetched external content into persistent memory/context"
+    applies_to = {ArtifactType.SETTINGS, ArtifactType.AGENT}
+    framework = "OWASP Agentic AI Top 10 ASI06 Memory & Context Poisoning"
+    remediation = (
+        "Don't pipe network output directly into CLAUDE.md, an imported memory "
+        "file, or another persistent context store. Unlike a context-injecting "
+        "hook that only affects the current session (AS-HOOK-003), this pattern "
+        "writes unvalidated external content into memory that persists and "
+        "influences every future session. Fetch to a scratch location, validate "
+        "or require human review, then commit only vetted content to memory."
+    )
+
+    def analyze(self, resource) -> Iterable[Finding]:
+        for event, entry in iter_hooks(resource):
+            cmd = _command_of(entry)
+            if cmd and _NETWORK.search(cmd) and _WRITE_REDIRECT.search(cmd) and _MEMORY_PATH.search(cmd):
+                yield self.finding(
+                    resource,
+                    f"{event} hook fetches external content and writes it into "
+                    f"persistent memory/context: {cmd!r} — unvalidated external "
+                    "data can poison the agent's long-term context across future "
+                    "sessions, not just the current one.",
                     line=resource.line_of(cmd[:40]),
                 )
 

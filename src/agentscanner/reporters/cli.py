@@ -8,6 +8,7 @@ from typing import List
 from rich.console import Console
 from rich.table import Table
 
+from .. import aivss
 from ..models import Finding, Severity
 
 _COLOR = {
@@ -27,7 +28,12 @@ def _rel(path: str) -> str:
         return path
 
 
-def render(findings: List[Finding], scanned: int) -> str:
+def render(
+    findings: List[Finding],
+    scanned: int,
+    show_aivss: bool = False,
+    thm: float = aivss.DEFAULT_THM,
+) -> str:
     console = Console(record=True, width=140)
 
     if not findings:
@@ -40,17 +46,24 @@ def render(findings: List[Finding], scanned: int) -> str:
     table = Table(show_lines=True, expand=True, pad_edge=False)
     table.add_column("Sev", no_wrap=True, width=8)
     table.add_column("Check", no_wrap=True, width=13)
+    if show_aivss:
+        table.add_column("AIVSS", no_wrap=True, width=8)
     table.add_column("Location", overflow="fold", ratio=2)
     table.add_column("Message", overflow="fold", ratio=3)
 
     for f in findings:
         color = _COLOR.get(f.severity, "white")
-        table.add_row(
+        row = [
             f"[{color}]{f.severity.name}[/{color}]",
             f.check_id,
+        ]
+        if show_aivss:
+            row.append(f"{aivss.score_finding(f.check_id, f.severity, thm).score:.1f}")
+        row += [
             f"{_rel(str(f.resource.path))}:{f.line}",
             f.message,
-        )
+        ]
+        table.add_row(*row)
 
     console.print(table)
 

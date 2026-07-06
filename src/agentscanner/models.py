@@ -38,6 +38,7 @@ class ArtifactType(str, enum.Enum):
     COMMAND = "command"
     MEMORY = "memory"  # CLAUDE.md / imported memory
     PLUGIN_MANIFEST = "plugin_manifest"
+    DEPENDENCY = "dependency"  # requirements.txt / package.json bundled with a skill
     UNKNOWN = "unknown"
 
 

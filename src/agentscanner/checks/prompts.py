@@ -19,6 +19,7 @@ class PromptInjectionIndicators(Check):
     id = "AS-PROMPT-001"
     severity = Severity.MEDIUM
     title = "Prompt-injection or hidden-content indicators in steering file"
+    model_sensitive = True
     applies_to = {
         ArtifactType.AGENT, ArtifactType.SKILL,
         ArtifactType.COMMAND, ArtifactType.MEMORY,

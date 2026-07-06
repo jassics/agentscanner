@@ -12,8 +12,11 @@ from pathlib import Path
 from typing import Iterable, List, Optional
 
 from .models import ArtifactType, Resource, Scope
+from .parsers.dependency_parser import parse_dependency_manifest
 from .parsers.json_parser import parse_json
 from .parsers.markdown_parser import parse_markdown
+
+_DEPENDENCY_MANIFESTS = ("requirements.txt", "package.json")
 
 MAX_FILE_BYTES = 2 * 1024 * 1024  # never read absurdly large files
 
@@ -69,6 +72,12 @@ def _collect_claude_dir(claude_dir: Path, scope: Scope) -> List[Resource]:
                 continue
             out.append(parse_markdown(f, scope, _classify_md(f)))
 
+    # dependency manifests bundled inside a skill directory
+    for name in _DEPENDENCY_MANIFESTS:
+        for f in _safe_iter(claude_dir, f"skills/**/{name}"):
+            if not _too_big(f):
+                out.append(parse_dependency_manifest(f, scope))
+
     # plugin manifests bundled under .claude
     for f in _safe_iter(claude_dir, "plugins/**/.claude-plugin/*.json"):
         if not _too_big(f):
@@ -90,6 +99,10 @@ def _collect_plugin_tree(root: Path) -> List[Resource]:
         for f in _safe_iter(root, pattern):
             if not _too_big(f):
                 out.append(parse_markdown(f, Scope.PLUGIN, atype))
+    for name in _DEPENDENCY_MANIFESTS:
+        for f in _safe_iter(root, f"plugins/**/skills/**/{name}"):
+            if not _too_big(f):
+                out.append(parse_dependency_manifest(f, Scope.PLUGIN))
     for f in _safe_iter(root, "plugins/**/.claude-plugin/*.json"):
         if not _too_big(f):
             out.append(parse_json(f, Scope.PLUGIN, ArtifactType.PLUGIN_MANIFEST))

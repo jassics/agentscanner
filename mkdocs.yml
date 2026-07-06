@@ -35,6 +35,7 @@ theme:
 nav:
   - Home: index.md
   - Check Catalog: checks.md
+  - AIVSS Scoring: aivss.md
   - Architecture: architecture.md
   - CI Integration: ci-integration.md
   - Hardened Baseline: hardened-baseline.md

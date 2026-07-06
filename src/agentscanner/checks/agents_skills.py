@@ -71,3 +71,74 @@ class OverPrivilegedAgent(Check):
                 )
                 f.severity = Severity.MEDIUM
                 yield f
+
+
+# Untrusted-external-input tools: anything that pulls content the agent did
+# not author and cannot fully vet (web pages, search results, email,
+# calendar invites, RSS/feeds, generic "fetch/browse/read" MCP tools).
+_UNTRUSTED_INPUT_TOOLS = {"webfetch", "websearch"}
+_UNTRUSTED_INPUT_KEYWORDS = ("mail", "gmail", "calendar", "fetch", "browse", "search", "feed", "rss")
+
+# High-impact-action tools: anything that changes state outside the current
+# conversation (runs code, writes files, sends/pays/deletes/deploys).
+_HIGH_IMPACT_TOOLS = {"bash"}
+_HIGH_IMPACT_KEYWORDS = ("send", "pay", "transfer", "delete", "deploy", "execute", "write", "post", "publish", "wire")
+
+
+def _matches_any(tool: str, exact: set, keywords: tuple) -> bool:
+    return tool in exact or any(k in tool for k in keywords)
+
+
+@register
+class GoalHijackChain(Check):
+    id = "AS-AGENT-002"
+    severity = Severity.MEDIUM  # bumped to HIGH when there's no approval checkpoint
+    title = "Agent/skill combines untrusted external input with a high-impact action tool"
+    applies_to = {ArtifactType.AGENT, ArtifactType.SKILL, ArtifactType.COMMAND}
+    framework = "OWASP Agentic AI Top 10 ASI01 Agent Goal Hijack; OWASP LLM01 Prompt Injection"
+    remediation = (
+        "This is not automatically malicious, but it is the exact shape of the "
+        "indirect-prompt-injection-to-action chain behind EchoLeak and similar "
+        "incidents: content the agent didn't author (web/email/search/calendar) "
+        "can steer a tool that changes state (Bash, file writes, sends, payments). "
+        "Per OWASP ASI01: require human approval before the high-impact action, "
+        "or split untrusted-input handling and high-impact actions into separate "
+        "agents so a single injected instruction can't chain straight through."
+    )
+
+    def analyze(self, resource) -> Iterable[Finding]:
+        fm = resource.frontmatter or {}
+        if not isinstance(fm, dict):
+            return
+        tools_field = fm.get("tools", fm.get("allowed-tools"))
+        tools = _tokens(tools_field)
+        if not tools:
+            return
+
+        # Require the two capabilities to come from *distinct* tools. A
+        # single tool name can substring-match both keyword sets (e.g. an
+        # MCP "gmail...send_message" tool matches "mail" and "send"), which
+        # is one capability, not the two-tool combination this check flags.
+        untrusted_input_tools = {
+            t for t in tools if _matches_any(t, _UNTRUSTED_INPUT_TOOLS, _UNTRUSTED_INPUT_KEYWORDS)
+        }
+        high_impact_tools = {
+            t for t in tools if _matches_any(t, _HIGH_IMPACT_TOOLS, _HIGH_IMPACT_KEYWORDS)
+        }
+        if not untrusted_input_tools or not high_impact_tools:
+            return
+        if len(untrusted_input_tools | high_impact_tools) < 2:
+            return
+
+        key = "tools" if "tools" in fm else "allowed-tools"
+        f = self.finding(
+            resource,
+            f"Declares both an untrusted external-input tool and a high-impact "
+            f"action tool ({tools_field!r}) — an indirect prompt injection in "
+            "fetched/retrieved content can redirect the agent straight into "
+            "the high-impact action with no separate review step.",
+            line=resource.line_of(key),
+        )
+        if fm.get("permissionMode") in ("bypassPermissions", "acceptEdits"):
+            f.severity = Severity.HIGH
+        yield f

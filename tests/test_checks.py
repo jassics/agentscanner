@@ -33,11 +33,15 @@ def ids_for(repo_root: Path):
         "AS-MCP-002",   # http:// mcp
         "AS-MCP-003",   # enableAllProjectMcpServers
         "AS-MCP-004",   # unpinned npx package
+        "AS-MCP-005",   # pinned npx package with known OSV vulnerability
+        "AS-DEP-001",   # pinned skill dependency with known OSV vulnerability
         "AS-HOOK-001",  # curl | bash
         "AS-HOOK-002",  # bash /tmp/setup.sh (untrusted path)
         "AS-HOOK-003",  # SessionStart network
         "AS-HOOK-004",  # missing timeout on PreToolUse hook
         "AS-AGENT-001",  # rogue agent bypass + tools *
+        "AS-AGENT-002",  # WebFetch + Bash goal-hijack chain (ASI01)
+        "AS-HOOK-005",   # network fetch piped into CLAUDE.md (ASI06)
         "AS-PROMPT-001",  # injection text in agent + CLAUDE.md
         # OWASP Agentic Skills Top 10 (AS-SKILL-*)
         "AS-SKILL-001",  # identity-file write (SOUL.md / MEMORY.md)

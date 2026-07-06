@@ -12,6 +12,11 @@
     "cleartext": {
       "type": "http",
       "url": "http://mcp.example.com/sse"
+    },
+    "vuln-pinned": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "left-pad@1.3.0"]
     }
   }
 }

@@ -33,6 +33,11 @@ class Check:
     applies_to: Set[ArtifactType] = set()
     remediation: str = ""
     framework: str = ""
+    # True for checks whose real-world exploitability depends on which model
+    # runs the flagged content (e.g. prompt-injection resistance) — smaller /
+    # less-aligned models are more likely to comply with embedded
+    # instructions than a frontier model. See --model-tier in the CLI.
+    model_sensitive: bool = False
 
     def analyze(self, resource: Resource) -> Iterable[Finding]:  # pragma: no cover
         """Inspect *resource* and yield zero or more :class:`~agentscanner.models.Finding` objects."""

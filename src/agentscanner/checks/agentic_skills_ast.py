@@ -139,6 +139,7 @@ class SkillSocialEngineeringPrereqs(Check):
     id = "AS-SKILL-002"
     severity = Severity.HIGH
     title = "Skill has social-engineering Prerequisites section with pipe-to-shell"
+    model_sensitive = True
     applies_to = {ArtifactType.SKILL}
     framework = "OWASP Agentic Skills AST01 – Malicious Skills"
     remediation = (
@@ -404,6 +405,7 @@ class SkillStandaloneBase64(Check):
     id = "AS-SKILL-010"
     severity = Severity.MEDIUM
     title = "Skill body contains standalone base64-encoded block (obfuscated payload)"
+    model_sensitive = True
     applies_to = {ArtifactType.SKILL}
     framework = "OWASP Agentic Skills AST08 – Poor Scanning"
     remediation = (

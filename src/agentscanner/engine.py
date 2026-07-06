@@ -64,3 +64,26 @@ def run_checks(
 def filter_by_threshold(findings: List[Finding], threshold: Severity) -> List[Finding]:
     """Return only findings at or above *threshold* severity."""
     return [f for f in findings if f.severity >= threshold]
+
+
+def apply_model_tier(findings: List[Finding], tier: str) -> List[Finding]:
+    """Bump the severity of ``model_sensitive`` findings by one level when
+    *tier* is ``"low"``.
+
+    Baseline severities assume a frontier-capable model. Content that relies
+    on the model to resist an embedded instruction (prompt injection,
+    social-engineering framing, obfuscated payloads, injected hook context)
+    is measurably more exploitable against a smaller / less-aligned model —
+    this reflects that without needing to actually run the model (see the
+    `probe` command for that). No-op when *tier* is ``"high"`` (default).
+    """
+    if tier != "low":
+        return findings
+    from .checks import get_checks
+
+    sensitive_ids = {c.id for c in get_checks() if getattr(c, "model_sensitive", False)}
+    for f in findings:
+        if f.check_id in sensitive_ids and f.severity < Severity.CRITICAL:
+            f.severity = Severity(int(f.severity) + 1)
+    findings.sort(key=lambda f: (-int(f.severity), f.check_id, str(f.resource.path)))
+    return findings

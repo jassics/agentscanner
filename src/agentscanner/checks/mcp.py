@@ -8,6 +8,7 @@ from __future__ import annotations
 import re
 from typing import Dict, Iterable
 
+from .. import osv
 from ..data import SECRET_KEY_NAME, find_secret, is_env_reference
 from ..models import ArtifactType, Finding, Severity
 from .base import Check, register
@@ -112,6 +113,38 @@ class McpAutoTrustAll(Check):
 
 
 _UNPINNED_NPX = re.compile(r"^(?:@[^/]+/)?[^@\s]+$")  # package with no @version
+_PKG_ECOSYSTEM = {"npx": "npm", "bunx": "npm", "pnpm": "npm", "uvx": "PyPI"}
+
+
+def _iter_command_packages(cfg: dict):
+    """Yield ``(ecosystem, pkg_arg, base_name, version_or_None)`` for each
+    package-like arg in a stdio MCP server's command/args.
+
+    Single source of truth for pin-detection: AS-MCP-004 (flags *no* pin) and
+    AS-MCP-005 (flags a *vulnerable* pin) must agree on what "pinned" means,
+    or a package could be silently invisible to one check while flagged by
+    the other.
+    """
+    command = cfg.get("command", "")
+    args = cfg.get("args", [])
+    ecosystem = _PKG_ECOSYSTEM.get(command)
+    if not ecosystem or not isinstance(args, list):
+        return
+    for a in args:
+        if not isinstance(a, str) or a.startswith("-"):
+            continue
+        if "==" in a:  # uvx pkg==1.2.3
+            base, _, version = a.partition("==")
+            yield ecosystem, a, base, (version or None)
+            continue
+        # npx/bunx/pnpm: "pkg@1.2.3" or "@scope/pkg@1.2.3"
+        body = a[1:] if a.startswith("@") else a
+        if "@" in body:
+            name_body, _, version = body.partition("@")
+            base = f"@{name_body}" if a.startswith("@") else name_body
+            yield ecosystem, a, base, (version if version and version != "latest" else None)
+        else:
+            yield ecosystem, a, a, None
 
 
 @register
@@ -131,14 +164,8 @@ class McpUnpinnedSupplyChain(Check):
             if not isinstance(cfg, dict):
                 continue
             command = cfg.get("command", "")
-            args = cfg.get("args", [])
-            if command not in ("npx", "uvx", "pnpm", "bunx") or not isinstance(args, list):
-                continue
-            pkgs = [a for a in args if isinstance(a, str) and not a.startswith("-")]
-            for pkg in pkgs:
-                base = pkg.split("==")[0]
-                pinned = ("@" in base.lstrip("@") and not base.endswith("@latest")) or "==" in pkg
-                if not pinned and _UNPINNED_NPX.match(base):
+            for _ecosystem, pkg, base, version in _iter_command_packages(cfg):
+                if version is None and _UNPINNED_NPX.match(base):
                     yield self.finding(
                         resource,
                         f"MCP server '{name}' runs unpinned package '{pkg}' via "
@@ -146,3 +173,38 @@ class McpUnpinnedSupplyChain(Check):
                         line=resource.line_of(pkg),
                     )
                     break
+
+
+@register
+class McpDependencyKnownVulnerability(Check):
+    id = "AS-MCP-005"
+    severity = Severity.HIGH  # per-finding severity is overridden from OSV data
+    title = "stdio MCP server pins a package with a known vulnerability (OSV.dev)"
+    applies_to = {ArtifactType.MCP, ArtifactType.SETTINGS, ArtifactType.AGENT}
+    framework = "OWASP LLM03 Supply Chain"
+    remediation = (
+        "Upgrade the pinned package to a version outside the affected range "
+        "(see the linked OSV advisory for the fixed version)."
+    )
+
+    def analyze(self, resource) -> Iterable[Finding]:
+        for name, cfg in _servers(resource).items():
+            if not isinstance(cfg, dict):
+                continue
+            for ecosystem, _pkg_arg, pkg, version in _iter_command_packages(cfg):
+                if version is None:
+                    continue
+                vulns = osv.query_dependency(ecosystem, pkg, version)
+                if not vulns:
+                    continue
+                for vuln in vulns:
+                    vid = vuln.get("id", "UNKNOWN")
+                    summary = (vuln.get("summary") or vuln.get("details") or "no summary provided")[:200]
+                    finding = self.finding(
+                        resource,
+                        f"MCP server '{name}' pins vulnerable package {pkg}@{version} "
+                        f"({vid}): {summary}",
+                        line=resource.line_of(pkg),
+                    )
+                    finding.severity = osv.to_severity(vuln)
+                    yield finding

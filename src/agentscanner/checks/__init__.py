@@ -11,3 +11,4 @@ from . import env_secrets  # noqa: F401,E402
 from . import agents_skills  # noqa: F401,E402
 from . import prompts      # noqa: F401,E402
 from . import agentic_skills_ast  # noqa: F401,E402
+from . import dependencies  # noqa: F401,E402
