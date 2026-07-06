@@ -54,7 +54,7 @@ Every resource is tagged with its **scope** (project / local / user / managed / 
 | Skills | `.claude/skills/*/SKILL.md` | Shell access, unsigned code, obfuscated payloads |
 | Memory / steering | `CLAUDE.md`, imported memory | Prompt injection, hidden unicode |
 
-See the [Check Catalog](checks.md) for the full list of 28 checks, or the [Architecture](architecture.md) page for the threat model and design rationale.
+See the [Check Catalog](checks.md) for the full list of checks, or the [Architecture](architecture.md) page for the threat model and design rationale.
 
 ## Prior art & license
 

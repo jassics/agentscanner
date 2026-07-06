@@ -107,7 +107,7 @@
   <g>
     <text x="845" y="375" font-size="154" font-weight="800" letter-spacing="22" fill="#ffffff">AGENT</text>
     <text x="845" y="588" font-size="196" font-weight="800" letter-spacing="4" fill="url(#scanGrad)">SCANNER</text>
-    <text x="850" y="708" font-size="53" font-weight="600" letter-spacing="1.5" fill="#aeb9dc">Static Security Scanner for Claude Code <tspan fill="#6ea0f0" font-weight="700">· 28 checks</tspan></text>
+    <text x="850" y="708" font-size="53" font-weight="600" letter-spacing="1.5" fill="#aeb9dc">Static Security Scanner for Claude Code</text>
     <text x="850" y="818" font-family="'SFMono-Regular',Menlo,Consolas,monospace" font-size="46" font-weight="500" letter-spacing="1" fill="#6f7aa3">github.com/jassics/agentscanner</text>
   </g>
 
