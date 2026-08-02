@@ -126,6 +126,8 @@ CHECK_ARCHETYPES: Dict[str, str] = {
     "AS-AGENT-002": "injection_surface",
     "AS-HOOK-005": "persistence",
     "AS-AGENT-005": "hygiene",
+    "AS-AGENT-006": "excessive_privilege",
+    "AS-AGENT-007": "excessive_privilege",
 }
 
 # check_id -> explicit factor-vector override, for checks that don't fit
@@ -147,6 +149,17 @@ CHECK_OVERRIDES: Dict[str, Tuple[float, ...]] = {
     # AS-HOOK-003's same-session injection), contextualAwareness maxed
     # (external content is the poisoning vector).
     "AS-HOOK-005": (0.0, 0.5, 1.0, 0.0, 0.0, 0.5, 0.5, 0.5, 1.0, 0.5),
+    # Unattended (no approval prompts) AND unbounded (no maxTurns): worse than
+    # excessive_privilege's baseline alone -- goalDrivenPlanning bumped to 1.0
+    # because with no approval checkpoint and no turn cap, the agent pursues
+    # its goal autonomously to completion with no human intervention point.
+    "AS-AGENT-006": (1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.5),
+    # Backgrounded (detached, no one watching) AND unbounded: not itself an
+    # excessive-privilege grant, but autonomyOfAction and goalDrivenPlanning
+    # are maxed (runs and pursues its goal with nobody present to notice),
+    # and opacityAndReflexivity is maxed (a background agent's progress isn't
+    # visible the way a foreground one's is).
+    "AS-AGENT-007": (1.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0),
 }
 
 

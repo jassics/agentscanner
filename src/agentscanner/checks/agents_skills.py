@@ -22,6 +22,11 @@ def _is_broad(value) -> bool:
     return any(t in _BROAD for t in toks)
 
 
+def _has_valid_max_turns(fm: dict) -> bool:
+    raw = fm.get("maxTurns")
+    return isinstance(raw, int) and not isinstance(raw, bool) and raw > 0
+
+
 @register
 class OverPrivilegedAgent(Check):
     id = "AS-AGENT-001"
@@ -172,8 +177,7 @@ class AgentUnboundedTurns(Check):
             return
 
         raw = fm.get("maxTurns")
-        valid = isinstance(raw, int) and not isinstance(raw, bool) and raw > 0
-        if not valid:
+        if not _has_valid_max_turns(fm):
             f = self.finding(
                 resource,
                 f"Agent 'maxTurns: {raw!r}' is not a positive integer, so it will "
@@ -182,3 +186,80 @@ class AgentUnboundedTurns(Check):
             )
             f.severity = Severity.MEDIUM
             yield f
+
+
+@register
+class UnattendedUnboundedAgent(Check):
+    id = "AS-AGENT-006"
+    severity = Severity.CRITICAL
+    title = "Unattended agent (bypass/acceptEdits) has no effective maxTurns bound"
+    applies_to = {ArtifactType.AGENT}
+    framework = "OWASP LLM10 Unbounded Consumption; OWASP LLM06 Excessive Agency"
+    remediation = (
+        "This agent runs with no approval prompts (permissionMode bypassPermissions/"
+        "acceptEdits) AND has no effective maxTurns — nothing stops it, and no human "
+        "is watching it run. Set an explicit positive-integer maxTurns, or drop the "
+        "bypass/acceptEdits mode so a human checkpoint exists. Either alone is a "
+        "known risk (AS-AGENT-001 / AS-AGENT-005); together they compound: an "
+        "unattended agent that can also run indefinitely."
+    )
+
+    def analyze(self, resource) -> Iterable[Finding]:
+        fm = resource.frontmatter or {}
+        if not isinstance(fm, dict):
+            return
+
+        mode = fm.get("permissionMode")
+        if mode not in ("bypassPermissions", "acceptEdits"):
+            return
+        if _has_valid_max_turns(fm):
+            return
+
+        reason = (
+            "no 'maxTurns' is set"
+            if "maxTurns" not in fm
+            else f"'maxTurns: {fm.get('maxTurns')!r}' is not a positive integer"
+        )
+        yield self.finding(
+            resource,
+            f"Agent sets permissionMode '{mode}' (no approval prompts) and {reason} "
+            "— it can run unattended and unbounded at the same time.",
+            line=resource.line_of("permissionMode"),
+        )
+
+
+@register
+class BackgroundUnboundedAgent(Check):
+    id = "AS-AGENT-007"
+    severity = Severity.HIGH
+    title = "Background agent has no effective maxTurns bound"
+    applies_to = {ArtifactType.AGENT}
+    framework = "OWASP LLM10 Unbounded Consumption"
+    remediation = (
+        "Set an explicit positive-integer 'maxTurns' on any agent with 'background: "
+        "true'. A foreground agent with no maxTurns is at least visible to the user "
+        "as it runs; a detached background agent with no maxTurns can loop or spend "
+        "with no one watching to notice or interrupt it."
+    )
+
+    def analyze(self, resource) -> Iterable[Finding]:
+        fm = resource.frontmatter or {}
+        if not isinstance(fm, dict):
+            return
+
+        if fm.get("background") is not True:
+            return
+        if _has_valid_max_turns(fm):
+            return
+
+        reason = (
+            "no 'maxTurns' is set"
+            if "maxTurns" not in fm
+            else f"'maxTurns: {fm.get('maxTurns')!r}' is not a positive integer"
+        )
+        yield self.finding(
+            resource,
+            f"Agent sets 'background: true' and {reason} — it can run detached, "
+            "unbounded, and unobserved.",
+            line=resource.line_of("background"),
+        )

@@ -96,10 +96,19 @@ Agents inherit permissions and can spawn further agents. Over-privilege compound
 | `AS-AGENT-001` | HIGH | Over-privileged agent/skill (`bypassPermissions`, `tools: *`) |
 | `AS-AGENT-002` | MEDIUM* | Agent/skill combines an untrusted-input tool (`WebFetch`, `WebSearch`, mail/calendar/feed-like MCP tools) with a high-impact action tool (`Bash`, write/send/pay/deploy/delete-like tools) |
 | `AS-AGENT-005` | LOW** | Agent frontmatter has no effective `maxTurns` bound — missing entirely, or present but not a positive integer |
+| `AS-AGENT-006` | CRITICAL | Agent sets `permissionMode: bypassPermissions`/`acceptEdits` (no approval checkpoint) AND has no effective `maxTurns` — unattended and unbounded at the same time |
+| `AS-AGENT-007` | HIGH | Agent sets `background: true` (runs detached) AND has no effective `maxTurns` — unobserved and unbounded at the same time |
 
-**Framework mapping:** OWASP LLM06 (Excessive Agency); `AS-AGENT-002` maps to OWASP Agentic AI Top 10 ASI01 (Agent Goal Hijack) and LLM01 (Prompt Injection); `AS-AGENT-005` maps to OWASP LLM10 (Unbounded Consumption).
+**Framework mapping:** OWASP LLM06 (Excessive Agency); `AS-AGENT-002` maps to OWASP Agentic AI Top 10 ASI01 (Agent Goal Hijack) and LLM01 (Prompt Injection); `AS-AGENT-005`/`AS-AGENT-006`/`AS-AGENT-007` map to OWASP LLM10 (Unbounded Consumption).
 
 \* `AS-AGENT-002` escalates to HIGH when `permissionMode` is `bypassPermissions`/`acceptEdits` (no approval checkpoint at all). This check flags a *combination of capabilities*, not a single bad setting — an agent with `WebFetch` + `Bash` is common and often legitimate; the finding is a prompt to add a human-approval or agent-separation checkpoint per OWASP ASI01 guidance, not necessarily a bug.
+
+`AS-AGENT-006` and `AS-AGENT-007` are compound checks in the same spirit as `AS-AGENT-002`: `AS-AGENT-001` already flags `bypassPermissions` alone, and `AS-AGENT-005` already flags a missing `maxTurns` alone, but the *combination* is worse than either — an agent that can act without approval **and** never stops, or one that runs detached **and** never stops, with no per-agent or repo-wide safety net to fall back on (there is no settings.json-level default for either `maxTurns` or a spend cap — see below).
+
+**What this can't catch (checked, not just unimplemented):** two related ideas were considered and ruled out as not statically checkable, rather than deferred to a roadmap —
+
+- **A `maxBudgetUsd`-style spend cap in agent frontmatter.** No such field exists on the `.claude/agents/*.md` / plugin `agents/*.md` surface. Budget capping (`maxBudgetUsd` / `max_budget_usd`) is an Agent SDK `query()`-time option only — a runtime call parameter, never persisted to a file — so there is nothing in any repo for a static scanner to read.
+- **A repo-wide `settings.json` default for `maxTurns` or spend**, so individual agents wouldn't be the only line of defense. `settings.json`'s schema (project/user/managed) has no such key at any scope; per-agent `maxTurns` in each agent's own frontmatter is the *only* lever, with no floor/ceiling settable from one place. `AS-AGENT-005`/`006`/`007` are therefore the full extent of what static analysis can offer here — there's no missing-global-setting to also flag.
 
 \*\* `AS-AGENT-005` fires unconditionally (like `AS-HOOK-004`'s missing-timeout check) — there is no platform default cap on agent turns, so a missing `maxTurns` genuinely means unbounded. It escalates from LOW to MEDIUM when the field is present but broken (non-integer, zero, negative, or a bool) — that's worse than missing, since the config looks safe but doesn't actually bound anything.
 
