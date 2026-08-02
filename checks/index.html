@@ -1110,10 +1110,16 @@
 <td>HIGH*</td>
 <td>stdio MCP pins a package with a known vulnerability (live OSV.dev lookup)</td>
 </tr>
+<tr>
+<td><code>AS-MCP-007</code></td>
+<td>LOW**</td>
+<td>stdio MCP server has no explicit <code>timeout</code></td>
+</tr>
 </tbody>
 </table>
-<p><strong>Framework mapping:</strong> OWASP LLM03 (Supply Chain), MCP security guidance.</p>
+<p><strong>Framework mapping:</strong> OWASP LLM03 (Supply Chain), MCP security guidance; <code>AS-MCP-007</code> maps to OWASP LLM10 (Unbounded Consumption).</p>
 <p>* <code>AS-MCP-005</code> severity is taken from the matched OSV advisory (CRITICAL/HIGH/MEDIUM/LOW), not fixed.</p>
+<p>** <code>AS-MCP-007</code> only applies to stdio (command-launched) servers — a remote (<code>url</code>-based) server already gets a sane ~60-second default per-request timer. A stdio server with no <code>timeout</code> falls back to <code>MCP_TOOL_TIMEOUT</code>, which defaults to roughly 28 hours — long enough that a hung process is, in practice, unbounded. <code>AS-MCP-006</code> (MCP server not on an explicit allowlist) remains a separate, unimplemented roadmap item — not to be confused with this check.</p>
 <hr />
 <h2 id="environment-secrets-as-env-as-secret-">Environment &amp; Secrets (<code>AS-ENV-*</code>, <code>AS-SECRET-*</code>)<a class="headerlink" href="#environment-secrets-as-env-as-secret-" title="Permanent link">&para;</a></h2>
 <p>Endpoint redirect and hardcoded credentials are both exfiltration and MITM vectors.</p>
@@ -1226,9 +1232,15 @@
 <td>MEDIUM</td>
 <td>Prompt-injection / hidden-unicode indicators in steering files</td>
 </tr>
+<tr>
+<td><code>AS-PROMPT-002</code></td>
+<td>MEDIUM</td>
+<td>Instructions tell the agent to disregard turn limits, resist interruption, or run indefinitely</td>
+</tr>
 </tbody>
 </table>
-<p><strong>Framework mapping:</strong> OWASP LLM01 (Prompt Injection).</p>
+<p><strong>Framework mapping:</strong> OWASP LLM01 (Prompt Injection); <code>AS-PROMPT-002</code> maps to OWASP LLM10 (Unbounded Consumption).</p>
+<p><code>AS-PROMPT-002</code> is distinct from <code>AS-PROMPT-001</code>: that check targets <em>untrusted</em> content trying to redirect the agent; this one targets the agent's <em>own authored</em> instructions telling the model to disregard turn limits or resist interruption. <code>maxTurns</code> is a hard harness-level stop regardless of what the prompt says, so this can't actually defeat the cap — but it makes hitting that cap on every single invocation far more likely instead of the agent stopping when the task is genuinely done, and it reads as an attempt to override a safety backstop even where the backstop itself can't be overridden. Deliberately narrow phrasing (specific co-occurring words, not generic "keep iterating until done" language, which is common and benign) to keep false positives low.</p>
 <hr />
 <h2 id="skills-as-skill-">Skills (<code>AS-SKILL-*</code>)<a class="headerlink" href="#skills-as-skill-" title="Permanent link">&para;</a></h2>
 <p>Skills extend Claude Code's capabilities. Malicious or misconfigured skills can grant shell access, bypass sandboxing, or hide obfuscated payloads.</p>
@@ -1306,7 +1318,7 @@
 <p><strong>Framework mapping:</strong> OWASP LLM03 (Supply Chain), LLM06 (Excessive Agency), LLM01 (Prompt Injection).</p>
 <hr />
 <h2 id="model-sensitivity">Model sensitivity<a class="headerlink" href="#model-sensitivity" title="Permanent link">&para;</a></h2>
-<p>Some checks flag content whose real-world exploitability depends on which model executes it — prompt injection, social-engineering framing, obfuscated payloads, and injected hook context are all things a frontier model is more likely to resist than a smaller/less-aligned one. These checks are marked <code>model_sensitive</code>: <code>AS-PROMPT-001</code>, <code>AS-HOOK-003</code>, <code>AS-SKILL-002</code>, <code>AS-SKILL-010</code>.</p>
+<p>Some checks flag content whose real-world exploitability depends on which model executes it — prompt injection, social-engineering framing, obfuscated payloads, and injected hook context are all things a frontier model is more likely to resist than a smaller/less-aligned one. These checks are marked <code>model_sensitive</code>: <code>AS-PROMPT-001</code>, <code>AS-PROMPT-002</code>, <code>AS-HOOK-003</code>, <code>AS-SKILL-002</code>, <code>AS-SKILL-010</code>.</p>
 <p><strong>Static (default, deterministic, offline):</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>agentscanner<span class="w"> </span>scan<span class="w"> </span>.<span class="w"> </span>--model-tier<span class="w"> </span>low
 </code></pre></div>
