@@ -1188,10 +1188,26 @@
 <td>LOW**</td>
 <td>Agent frontmatter has no effective <code>maxTurns</code> bound — missing entirely, or present but not a positive integer</td>
 </tr>
+<tr>
+<td><code>AS-AGENT-006</code></td>
+<td>CRITICAL</td>
+<td>Agent sets <code>permissionMode: bypassPermissions</code>/<code>acceptEdits</code> (no approval checkpoint) AND has no effective <code>maxTurns</code> — unattended and unbounded at the same time</td>
+</tr>
+<tr>
+<td><code>AS-AGENT-007</code></td>
+<td>HIGH</td>
+<td>Agent sets <code>background: true</code> (runs detached) AND has no effective <code>maxTurns</code> — unobserved and unbounded at the same time</td>
+</tr>
 </tbody>
 </table>
-<p><strong>Framework mapping:</strong> OWASP LLM06 (Excessive Agency); <code>AS-AGENT-002</code> maps to OWASP Agentic AI Top 10 ASI01 (Agent Goal Hijack) and LLM01 (Prompt Injection); <code>AS-AGENT-005</code> maps to OWASP LLM10 (Unbounded Consumption).</p>
+<p><strong>Framework mapping:</strong> OWASP LLM06 (Excessive Agency); <code>AS-AGENT-002</code> maps to OWASP Agentic AI Top 10 ASI01 (Agent Goal Hijack) and LLM01 (Prompt Injection); <code>AS-AGENT-005</code>/<code>AS-AGENT-006</code>/<code>AS-AGENT-007</code> map to OWASP LLM10 (Unbounded Consumption).</p>
 <p>* <code>AS-AGENT-002</code> escalates to HIGH when <code>permissionMode</code> is <code>bypassPermissions</code>/<code>acceptEdits</code> (no approval checkpoint at all). This check flags a <em>combination of capabilities</em>, not a single bad setting — an agent with <code>WebFetch</code> + <code>Bash</code> is common and often legitimate; the finding is a prompt to add a human-approval or agent-separation checkpoint per OWASP ASI01 guidance, not necessarily a bug.</p>
+<p><code>AS-AGENT-006</code> and <code>AS-AGENT-007</code> are compound checks in the same spirit as <code>AS-AGENT-002</code>: <code>AS-AGENT-001</code> already flags <code>bypassPermissions</code> alone, and <code>AS-AGENT-005</code> already flags a missing <code>maxTurns</code> alone, but the <em>combination</em> is worse than either — an agent that can act without approval <strong>and</strong> never stops, or one that runs detached <strong>and</strong> never stops, with no per-agent or repo-wide safety net to fall back on (there is no settings.json-level default for either <code>maxTurns</code> or a spend cap — see below).</p>
+<p><strong>What this can't catch (checked, not just unimplemented):</strong> two related ideas were considered and ruled out as not statically checkable, rather than deferred to a roadmap —</p>
+<ul>
+<li><strong>A <code>maxBudgetUsd</code>-style spend cap in agent frontmatter.</strong> No such field exists on the <code>.claude/agents/*.md</code> / plugin <code>agents/*.md</code> surface. Budget capping (<code>maxBudgetUsd</code> / <code>max_budget_usd</code>) is an Agent SDK <code>query()</code>-time option only — a runtime call parameter, never persisted to a file — so there is nothing in any repo for a static scanner to read.</li>
+<li><strong>A repo-wide <code>settings.json</code> default for <code>maxTurns</code> or spend</strong>, so individual agents wouldn't be the only line of defense. <code>settings.json</code>'s schema (project/user/managed) has no such key at any scope; per-agent <code>maxTurns</code> in each agent's own frontmatter is the <em>only</em> lever, with no floor/ceiling settable from one place. <code>AS-AGENT-005</code>/<code>006</code>/<code>007</code> are therefore the full extent of what static analysis can offer here — there's no missing-global-setting to also flag.</li>
+</ul>
 <p>** <code>AS-AGENT-005</code> fires unconditionally (like <code>AS-HOOK-004</code>'s missing-timeout check) — there is no platform default cap on agent turns, so a missing <code>maxTurns</code> genuinely means unbounded. It escalates from LOW to MEDIUM when the field is present but broken (non-integer, zero, negative, or a bool) — that's worse than missing, since the config looks safe but doesn't actually bound anything.</p>
 <hr />
 <h2 id="prompts-steering-as-prompt-">Prompts &amp; Steering (<code>AS-PROMPT-*</code>)<a class="headerlink" href="#prompts-steering-as-prompt-" title="Permanent link">&para;</a></h2>
