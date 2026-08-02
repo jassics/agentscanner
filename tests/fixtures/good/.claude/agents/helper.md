@@ -3,6 +3,7 @@ name: helper
 description: A least-privilege demo agent that only reads and greps code.
 model: sonnet
 tools: Read, Grep, Glob
+maxTurns: 20
 ---
 
 You are a careful code-reading assistant. Summarize the requested files and cite

@@ -95,10 +95,13 @@ Agents inherit permissions and can spawn further agents. Over-privilege compound
 |---|---|---|
 | `AS-AGENT-001` | HIGH | Over-privileged agent/skill (`bypassPermissions`, `tools: *`) |
 | `AS-AGENT-002` | MEDIUM* | Agent/skill combines an untrusted-input tool (`WebFetch`, `WebSearch`, mail/calendar/feed-like MCP tools) with a high-impact action tool (`Bash`, write/send/pay/deploy/delete-like tools) |
+| `AS-AGENT-005` | LOW** | Agent frontmatter has no effective `maxTurns` bound — missing entirely, or present but not a positive integer |
 
-**Framework mapping:** OWASP LLM06 (Excessive Agency); `AS-AGENT-002` maps to OWASP Agentic AI Top 10 ASI01 (Agent Goal Hijack) and LLM01 (Prompt Injection).
+**Framework mapping:** OWASP LLM06 (Excessive Agency); `AS-AGENT-002` maps to OWASP Agentic AI Top 10 ASI01 (Agent Goal Hijack) and LLM01 (Prompt Injection); `AS-AGENT-005` maps to OWASP LLM10 (Unbounded Consumption).
 
 \* `AS-AGENT-002` escalates to HIGH when `permissionMode` is `bypassPermissions`/`acceptEdits` (no approval checkpoint at all). This check flags a *combination of capabilities*, not a single bad setting — an agent with `WebFetch` + `Bash` is common and often legitimate; the finding is a prompt to add a human-approval or agent-separation checkpoint per OWASP ASI01 guidance, not necessarily a bug.
+
+\*\* `AS-AGENT-005` fires unconditionally (like `AS-HOOK-004`'s missing-timeout check) — there is no platform default cap on agent turns, so a missing `maxTurns` genuinely means unbounded. It escalates from LOW to MEDIUM when the field is present but broken (non-integer, zero, negative, or a bool) — that's worse than missing, since the config looks safe but doesn't actually bound anything.
 
 ---
 

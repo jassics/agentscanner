@@ -125,6 +125,7 @@ CHECK_ARCHETYPES: Dict[str, str] = {
     "AS-SKILL-012": "governance_gap",
     "AS-AGENT-002": "injection_surface",
     "AS-HOOK-005": "persistence",
+    "AS-AGENT-005": "hygiene",
 }
 
 # check_id -> explicit factor-vector override, for checks that don't fit

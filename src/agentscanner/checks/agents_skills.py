@@ -142,3 +142,43 @@ class GoalHijackChain(Check):
         if fm.get("permissionMode") in ("bypassPermissions", "acceptEdits"):
             f.severity = Severity.HIGH
         yield f
+
+
+@register
+class AgentUnboundedTurns(Check):
+    id = "AS-AGENT-005"
+    severity = Severity.LOW  # escalated to MEDIUM when the field is present but broken
+    title = "Agent has no effective maxTurns bound"
+    applies_to = {ArtifactType.AGENT}
+    framework = "OWASP LLM10 Unbounded Consumption"
+    remediation = (
+        "Set 'maxTurns' to a positive integer in the agent's frontmatter. There is "
+        "no platform default cap — an agent with no maxTurns (or an invalid value) "
+        "runs unbounded, risking runaway cost, a hung session, or an unattended "
+        "CI/CD invocation that never terminates."
+    )
+
+    def analyze(self, resource) -> Iterable[Finding]:
+        fm = resource.frontmatter or {}
+        if not isinstance(fm, dict):
+            return
+
+        if "maxTurns" not in fm:
+            yield self.finding(
+                resource,
+                "Agent frontmatter has no 'maxTurns' — it can run an unbounded "
+                "number of turns (no platform default limit applies).",
+            )
+            return
+
+        raw = fm.get("maxTurns")
+        valid = isinstance(raw, int) and not isinstance(raw, bool) and raw > 0
+        if not valid:
+            f = self.finding(
+                resource,
+                f"Agent 'maxTurns: {raw!r}' is not a positive integer, so it will "
+                "not actually bound the agent's turns.",
+                line=resource.line_of("maxTurns"),
+            )
+            f.severity = Severity.MEDIUM
+            yield f
