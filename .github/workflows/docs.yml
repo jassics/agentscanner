@@ -8,9 +8,16 @@ on:
 permissions:
   contents: write
 
+# Allow one concurrent deployment; let an in-progress gh-deploy finish rather
+# than risk cancelling it mid-push.
+concurrency:
+  group: docs-deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
