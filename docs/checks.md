@@ -51,10 +51,13 @@ MCP servers are arbitrary processes (stdio) or remote endpoints (HTTP/SSE) given
 | `AS-MCP-003` | HIGH | `enableAllProjectMcpServers: true` (auto-trust all project MCP) |
 | `AS-MCP-004` | MEDIUM | stdio MCP pulls an unpinned remote package (`npx -y pkg`) |
 | `AS-MCP-005` | HIGH* | stdio MCP pins a package with a known vulnerability (live OSV.dev lookup) |
+| `AS-MCP-007` | LOW** | stdio MCP server has no explicit `timeout` |
 
-**Framework mapping:** OWASP LLM03 (Supply Chain), MCP security guidance.
+**Framework mapping:** OWASP LLM03 (Supply Chain), MCP security guidance; `AS-MCP-007` maps to OWASP LLM10 (Unbounded Consumption).
 
 \* `AS-MCP-005` severity is taken from the matched OSV advisory (CRITICAL/HIGH/MEDIUM/LOW), not fixed.
+
+\*\* `AS-MCP-007` only applies to stdio (command-launched) servers — a remote (`url`-based) server already gets a sane ~60-second default per-request timer. A stdio server with no `timeout` falls back to `MCP_TOOL_TIMEOUT`, which defaults to roughly 28 hours — long enough that a hung process is, in practice, unbounded. `AS-MCP-006` (MCP server not on an explicit allowlist) remains a separate, unimplemented roadmap item — not to be confused with this check.
 
 ---
 
@@ -121,8 +124,11 @@ Agents inherit permissions and can spawn further agents. Over-privilege compound
 | ID | Severity | What it catches |
 |---|---|---|
 | `AS-PROMPT-001` | MEDIUM | Prompt-injection / hidden-unicode indicators in steering files |
+| `AS-PROMPT-002` | MEDIUM | Instructions tell the agent to disregard turn limits, resist interruption, or run indefinitely |
 
-**Framework mapping:** OWASP LLM01 (Prompt Injection).
+**Framework mapping:** OWASP LLM01 (Prompt Injection); `AS-PROMPT-002` maps to OWASP LLM10 (Unbounded Consumption).
+
+`AS-PROMPT-002` is distinct from `AS-PROMPT-001`: that check targets *untrusted* content trying to redirect the agent; this one targets the agent's *own authored* instructions telling the model to disregard turn limits or resist interruption. `maxTurns` is a hard harness-level stop regardless of what the prompt says, so this can't actually defeat the cap — but it makes hitting that cap on every single invocation far more likely instead of the agent stopping when the task is genuinely done, and it reads as an attempt to override a safety backstop even where the backstop itself can't be overridden. Deliberately narrow phrasing (specific co-occurring words, not generic "keep iterating until done" language, which is common and benign) to keep false positives low.
 
 ---
 
@@ -151,7 +157,7 @@ Skills extend Claude Code's capabilities. Malicious or misconfigured skills can 
 
 ## Model sensitivity
 
-Some checks flag content whose real-world exploitability depends on which model executes it — prompt injection, social-engineering framing, obfuscated payloads, and injected hook context are all things a frontier model is more likely to resist than a smaller/less-aligned one. These checks are marked `model_sensitive`: `AS-PROMPT-001`, `AS-HOOK-003`, `AS-SKILL-002`, `AS-SKILL-010`.
+Some checks flag content whose real-world exploitability depends on which model executes it — prompt injection, social-engineering framing, obfuscated payloads, and injected hook context are all things a frontier model is more likely to resist than a smaller/less-aligned one. These checks are marked `model_sensitive`: `AS-PROMPT-001`, `AS-PROMPT-002`, `AS-HOOK-003`, `AS-SKILL-002`, `AS-SKILL-010`.
 
 **Static (default, deterministic, offline):**
 

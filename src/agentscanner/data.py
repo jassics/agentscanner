@@ -69,6 +69,19 @@ INJECTION_PATTERNS = [
     ("exfiltration", re.compile(r"(?i)\b(send|post|upload|exfiltrate|leak)\b[^.\n]{0,40}\b(credential|secret|token|password|api[_ -]?key|\.env|private\s+key)\b[^.\n]{0,40}\b(to|http|https|url|endpoint|server)")),
 ]
 
+# Instructions in an agent/skill's OWN authored prose that explicitly override
+# a natural stopping point -- distinct from INJECTION_PATTERNS above (which
+# target untrusted content trying to redirect the agent). This is the agent's
+# own author telling the model to disregard turn limits or resist interruption.
+# Deliberately narrow (specific co-occurring phrasing, not generic "keep
+# iterating until done" language, which is common and benign) to keep false
+# positives low.
+UNBOUNDED_EXECUTION_PATTERNS = [
+    ("ignore-turn-limit", re.compile(r"(?i)\b(ignore|disregard|regardless\s+of|no\s+matter\s+how\s+many)\b[^.\n]{0,30}\b(turn|iteration|step)s?\b[^.\n]{0,10}\b(limit|cap|count|budget)")),
+    ("resist-interruption", re.compile(r"(?i)\b(do\s+not|don'?t|never)\b[^.\n]{0,20}\bstop\b[^.\n]{0,30}\b(interrupt|told\s+to\s+stop|asked\s+to\s+stop|cancell?ed)")),
+    ("run-indefinitely", re.compile(r"(?i)\b(run|work|keep\s+(on\s+)?(going|running|working))\b[^.\n]{0,20}\b(indefinitely|forever|without\s+(ever\s+)?stopping)\b")),
+]
+
 # Zero-width, bidi-control, and BOM characters that hide content in prompts.
 # Built from explicit codepoints to keep the source readable and unambiguous.
 _HIDDEN_RANGES = [

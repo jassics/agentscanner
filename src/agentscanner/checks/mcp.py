@@ -208,3 +208,36 @@ class McpDependencyKnownVulnerability(Check):
                     )
                     finding.severity = osv.to_severity(vuln)
                     yield finding
+
+
+@register
+class McpStdioNoTimeout(Check):
+    id = "AS-MCP-007"
+    severity = Severity.LOW
+    title = "stdio MCP server has no explicit timeout"
+    applies_to = {ArtifactType.MCP, ArtifactType.SETTINGS, ArtifactType.AGENT}
+    framework = "OWASP LLM10 Unbounded Consumption"
+    remediation = (
+        "Set an explicit 'timeout' (milliseconds) on the MCP server entry. "
+        "With no per-server timeout and no MCP_TOOL_TIMEOUT override, a stdio "
+        "MCP server that hangs (a stuck process, a tool call that never "
+        "returns) can block on that call for its ~28-hour default before the "
+        "client gives up -- practically unbounded for most workflows."
+    )
+
+    def analyze(self, resource) -> Iterable[Finding]:
+        for name, cfg in _servers(resource).items():
+            if not isinstance(cfg, dict):
+                continue
+            # Remote transports (url present) get a sane ~60s default per-request
+            # timer; only stdio (command-launched) servers default to the huge
+            # MCP_TOOL_TIMEOUT fallback, so scope this check to those.
+            if cfg.get("url") or not cfg.get("command"):
+                continue
+            if "timeout" not in cfg:
+                yield self.finding(
+                    resource,
+                    f"MCP server '{name}' (stdio) has no 'timeout' set -- a hung "
+                    "call falls back to the ~28-hour MCP_TOOL_TIMEOUT default.",
+                    line=resource.line_of(f'"{name}"'),
+                )

@@ -44,6 +44,8 @@ def ids_for(repo_root: Path):
         "AS-AGENT-005",  # agent with no maxTurns (unbounded turns, LLM10)
         "AS-AGENT-006",  # rogue: bypassPermissions + no maxTurns (unattended+unbounded)
         "AS-AGENT-007",  # background-runaway: background: true + no maxTurns
+        "AS-MCP-007",    # leaky/vuln-pinned: stdio MCP server with no timeout
+        "AS-PROMPT-002", # background-runaway: "don't stop"/"run indefinitely" prose
         "AS-HOOK-005",   # network fetch piped into CLAUDE.md (ASI06)
         "AS-PROMPT-001",  # injection text in agent + CLAUDE.md
         # OWASP Agentic Skills Top 10 (AS-SKILL-*)

@@ -88,7 +88,9 @@ def _collect_claude_dir(claude_dir: Path, scope: Scope) -> List[Resource]:
 
 def _collect_plugin_tree(root: Path) -> List[Resource]:
     """Collect artifacts laid out as a plugin/marketplace repo:
-    ``plugins/<name>/{skills,agents,commands}/`` and plugin manifests.
+    ``plugins/<name>/{skills,agents,commands}/``, plugin manifests, and any
+    plugin-scoped ``.mcp.json`` (a plugin may bundle its own MCP servers at
+    its root, same as a project-scope ``.mcp.json``).
     """
     out: List[Resource] = []
     for pattern, atype in (
@@ -106,6 +108,9 @@ def _collect_plugin_tree(root: Path) -> List[Resource]:
     for f in _safe_iter(root, "plugins/**/.claude-plugin/*.json"):
         if not _too_big(f):
             out.append(parse_json(f, Scope.PLUGIN, ArtifactType.PLUGIN_MANIFEST))
+    for f in _safe_iter(root, "plugins/*/.mcp.json"):
+        if not _too_big(f):
+            out.append(parse_json(f, Scope.PLUGIN, ArtifactType.MCP))
     return out
 
 

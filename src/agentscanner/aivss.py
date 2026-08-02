@@ -128,6 +128,8 @@ CHECK_ARCHETYPES: Dict[str, str] = {
     "AS-AGENT-005": "hygiene",
     "AS-AGENT-006": "excessive_privilege",
     "AS-AGENT-007": "excessive_privilege",
+    "AS-MCP-007": "hygiene",
+    "AS-PROMPT-002": "excessive_privilege",
 }
 
 # check_id -> explicit factor-vector override, for checks that don't fit

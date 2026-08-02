@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "demo-server": {
+      "command": "npx",
+      "args": ["-y", "@acme/mcp-demo"]
+    }
+  }
+}

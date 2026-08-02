@@ -13,7 +13,7 @@ FIXTURES = Path(__file__).parent / "fixtures"
 
 def test_model_sensitive_checks_are_marked():
     sensitive = {c.id for c in get_checks() if c.model_sensitive}
-    assert sensitive == {"AS-PROMPT-001", "AS-HOOK-003", "AS-SKILL-002", "AS-SKILL-010"}
+    assert sensitive == {"AS-PROMPT-001", "AS-PROMPT-002", "AS-HOOK-003", "AS-SKILL-002", "AS-SKILL-010"}
 
 
 def test_high_tier_is_a_noop():

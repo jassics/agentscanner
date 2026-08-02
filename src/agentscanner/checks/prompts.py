@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Iterable
 
-from ..data import HIDDEN_UNICODE, INJECTION_PATTERNS
+from ..data import HIDDEN_UNICODE, INJECTION_PATTERNS, UNBOUNDED_EXECUTION_PATTERNS
 from ..models import ArtifactType, Finding, Severity
 from .base import Check, register
 
@@ -58,3 +58,39 @@ class PromptInjectionIndicators(Check):
                 f"from a human reviewer.",
                 line=line,
             )
+
+
+@register
+class UnboundedExecutionLanguage(Check):
+    id = "AS-PROMPT-002"
+    severity = Severity.MEDIUM
+    title = "Instructions tell the agent to disregard turn limits or interruption"
+    model_sensitive = True
+    applies_to = {ArtifactType.AGENT, ArtifactType.SKILL, ArtifactType.COMMAND}
+    framework = "OWASP LLM10 Unbounded Consumption"
+    remediation = (
+        "maxTurns is a hard harness-level stop regardless of what the prompt says, "
+        "but instructions telling the model to disregard turn limits, resist "
+        "interruption, or run indefinitely make it far more likely the agent will "
+        "burn its entire turn/cost budget on every invocation instead of stopping "
+        "when the task is actually done -- and read as an attempt to override "
+        "oversight even when the harness itself can't be overridden. Remove this "
+        "language and give the agent a concrete, checkable completion condition "
+        "instead."
+    )
+
+    def analyze(self, resource) -> Iterable[Finding]:
+        text = resource.body if resource.body is not None else resource.raw_text
+        if not text:
+            return
+
+        for label, rx in UNBOUNDED_EXECUTION_PATTERNS:
+            m = rx.search(text)
+            if m:
+                snippet = m.group(0).strip()
+                yield self.finding(
+                    resource,
+                    f"Instructions tell the agent to disregard stopping "
+                    f"conditions ({label}): {snippet!r}",
+                    line=resource.line_of(snippet[:30]),
+                )
