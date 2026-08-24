@@ -11,7 +11,7 @@ from rich.table import Table
 
 from . import __version__, aivss
 from .checks import get_checks
-from .discovery import discover
+from .discovery import ScanManifest, discover
 from .engine import apply_model_tier, filter_by_threshold, run_checks
 from .models import Severity
 from .probe import probe_resource
@@ -31,6 +31,29 @@ def _split(values: Optional[List[str]]) -> List[str]:
     for v in values or []:
         out.extend(part for part in v.split(",") if part.strip())
     return out
+
+
+def _print_scan_manifest(manifest: ScanManifest) -> None:
+    """Print what discovery walked/matched/excluded: which folders, which files."""
+    console = Console(stderr=True)
+    console.print(f"\n[bold]Scanned {len(manifest.dirs_walked)} folder(s):[/bold]")
+    for d in manifest.dirs_walked:
+        console.print(f"  {d}")
+
+    if manifest.dirs_excluded:
+        console.print(f"\n[bold]Excluded {len(manifest.dirs_excluded)} folder(s):[/bold]")
+        for d in manifest.dirs_excluded:
+            console.print(f"  {d}")
+
+    console.print(f"\n[bold]Matched {len(manifest.files_matched)} artifact file(s):[/bold]")
+    table = Table(show_lines=False, expand=True, pad_edge=False)
+    table.add_column("Type", no_wrap=True, width=16)
+    table.add_column("Scope", no_wrap=True, width=10)
+    table.add_column("File", overflow="fold")
+    for path, atype, scope in manifest.files_matched:
+        table.add_row(atype.value, scope.value, str(path))
+    console.print(table)
+    console.print()
 
 
 @app.command()
@@ -83,6 +106,11 @@ def scan(
         "--aivss-thm",
         help="AIVSS Threat Multiplier override (0.0-1.0; default 0.97 per the OWASP spec).",
     ),
+    list_scanned: bool = typer.Option(
+        False,
+        "--list-scanned",
+        help="Print every file/folder walked and matched before the findings report.",
+    ),
 ) -> None:
     """Scan a repository (and optionally ~/.claude) for insecure Claude Code config."""
     if offline:
@@ -96,7 +124,11 @@ def scan(
         _err.print(f"[red]Invalid severity: {severity_threshold}[/red]")
         raise typer.Exit(2)
 
-    resources = discover(repo_root=path, include_user=include_user)
+    manifest = ScanManifest() if list_scanned else None
+    resources = discover(repo_root=path, include_user=include_user, manifest=manifest)
+
+    if manifest is not None:
+        _print_scan_manifest(manifest)
     findings = run_checks(
         resources, only=_split(check), skip=_split(skip_check)
     )
