@@ -50,6 +50,7 @@ def render(
         table.add_column("AIVSS", no_wrap=True, width=8)
     table.add_column("Location", overflow="fold", ratio=2)
     table.add_column("Message", overflow="fold", ratio=3)
+    table.add_column("Fix / Recommendation", overflow="fold", ratio=3)
 
     for f in findings:
         color = _COLOR.get(f.severity, "white")
@@ -62,6 +63,7 @@ def render(
         row += [
             f"{_rel(str(f.resource.path))}:{f.line}",
             f.message,
+            f.remediation or "-",
         ]
         table.add_row(*row)
 
