@@ -1,6 +1,6 @@
-"""Optional dynamic model-susceptibility probe (the ``agentscanner probe`` command).
+"""Optional dynamic model-susceptibility probe (the ``aisecscan probe`` command).
 
-Everything else in agentscanner is static, deterministic, and offline by
+Everything else in aisecscan is static, deterministic, and offline by
 default (see ``osv.py``'s design notes for why that matters). This module is
 the deliberate exception: it answers a question a static scanner cannot —
 "does *this specific model* actually comply with this flagged content, right
@@ -13,7 +13,7 @@ now" — which requires running the model. Consequences, all intentional:
     out to a model.
   - The untrusted content is sent as inert text for the target model to
     summarize, never given tool access or agency — the same "read, don't
-    execute" boundary the rest of agentscanner keeps.
+    execute" boundary the rest of aisecscan keeps.
 """
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ from typing import Optional
 
 _ANTHROPIC_URL = "https://api.anthropic.com/v1/messages"
 _API_VERSION = "2023-06-01"
-_TIMEOUT = float(os.environ.get("AGENTSCANNER_PROBE_TIMEOUT", "30.0"))
+_TIMEOUT = float(os.environ.get("AISECSCAN_PROBE_TIMEOUT", "30.0"))
 _MAX_CONTENT_CHARS = 4000
 
 _SUMMARIZE_SYSTEM = (

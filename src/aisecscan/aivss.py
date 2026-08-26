@@ -5,7 +5,7 @@ Source: "AIVSS Scoring System For OWASP Agentic AI Core Security Risks v0.5"
 factor scale, and the default Threat Multiplier are taken from that spec.
 The *per-check factor values* below are ours — the official spec scores its
 own 10 Core Risk categories with worked examples from expert threat
-modeling, not agentscanner's specific checks. We map each check to the
+modeling, not aisecscan's specific checks. We map each check to the
 archetype that best matches its blast radius and publish the mapping (see
 ``CHECK_ARCHETYPES`` and ``docs/aivss.md``) so the number is reproducible
 and auditable: identical (check_id, severity, ThM) in, identical score out,

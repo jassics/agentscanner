@@ -5,9 +5,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from agentscanner.checks.agents_skills import GoalHijackChain
-from agentscanner.models import ArtifactType, Scope
-from agentscanner.parsers.markdown_parser import parse_markdown
+from aisecscan.checks.agents_skills import GoalHijackChain
+from aisecscan.models import ArtifactType, Scope
+from aisecscan.parsers.markdown_parser import parse_markdown
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

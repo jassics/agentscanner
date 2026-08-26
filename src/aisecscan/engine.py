@@ -15,7 +15,7 @@ def run_checks(
     """Run all registered checks against *resources* and return sorted findings.
 
     Args:
-        resources: Parsed artifacts from :func:`~agentscanner.discovery.discover`.
+        resources: Parsed artifacts from :func:`~aisecscan.discovery.discover`.
         only: If non-empty, run only checks whose IDs are in this iterable.
         skip: Check IDs to exclude from the run.
 

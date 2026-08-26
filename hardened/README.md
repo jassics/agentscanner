@@ -1,8 +1,8 @@
 # Hardened Claude Code settings (reference baseline)
 
 `settings.json` here is an opinionated, secure-by-default Claude Code
-configuration. It is also `agentscanner`'s canonical **known-good fixture**: it must
-scan with zero findings, and every hardening choice maps 1:1 to a `agentscanner` check.
+configuration. It is also `aisecscan`'s canonical **known-good fixture**: it must
+scan with zero findings, and every hardening choice maps 1:1 to a `aisecscan` check.
 
 ## What it enforces
 
@@ -25,5 +25,5 @@ Copy into your project (`.claude/settings.json`) or user scope (`~/.claude/setti
 adjust the hook script paths to your machine, then verify:
 
 ```bash
-agentscanner scan . --severity-threshold LOW
+aisecscan scan . --severity-threshold LOW
 ```

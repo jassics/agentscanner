@@ -1,6 +1,6 @@
 # Hardened Baseline
 
-`hardened/settings.json` is an opinionated, secure-by-default Claude Code configuration. It is also `agentscanner`'s canonical **known-good fixture**: it must scan with zero findings, and every hardening choice maps 1:1 to an `agentscanner` check.
+`hardened/settings.json` is an opinionated, secure-by-default Claude Code configuration. It is also `aisecscan`'s canonical **known-good fixture**: it must scan with zero findings, and every hardening choice maps 1:1 to an `aisecscan` check.
 
 ## What it enforces
 
@@ -22,7 +22,7 @@
 Copy into your project (`.claude/settings.json`) or user scope (`~/.claude/settings.json`), adjust the hook script paths to your machine, then verify:
 
 ```bash
-agentscanner scan . --severity-threshold LOW
+aisecscan scan . --severity-threshold LOW
 ```
 
 A clean run (zero findings) confirms the hardened config is intact. Any finding indicates a deviation from the baseline.
@@ -31,7 +31,7 @@ A clean run (zero findings) confirms the hardened config is intact. Any finding 
 
 ```bash
 # Fail if the committed settings deviate from hardened baseline on any severity
-agentscanner scan . --fail-on LOW
+aisecscan scan . --fail-on LOW
 ```
 
 ## Adopting incrementally
@@ -39,7 +39,7 @@ agentscanner scan . --fail-on LOW
 If you can't adopt the full baseline immediately, start by gating on CRITICAL and HIGH:
 
 ```bash
-agentscanner scan . --fail-on HIGH
+aisecscan scan . --fail-on HIGH
 ```
 
 Then tighten the threshold over time as you address MEDIUM and LOW findings.

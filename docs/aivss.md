@@ -1,6 +1,6 @@
 # AIVSS-Agentic scoring
 
-`agentscanner scan --aivss` adds an [OWASP AIVSS](https://aivss.owasp.org) score to every finding — a risk score purpose-built for agentic systems, on top of (not instead of) each check's normal `Severity`.
+`aisecscan scan --aivss` adds an [OWASP AIVSS](https://aivss.owasp.org) score to every finding — a risk score purpose-built for agentic systems, on top of (not instead of) each check's normal `Severity`.
 
 ## Why not just severity?
 
@@ -14,7 +14,7 @@ The official formula, source: *AIVSS Scoring System For OWASP Agentic AI Core Se
 AIVSS_Score = ((CVSS_Base_Score + AARS) / 2) x ThM
 ```
 
-- **AARS** (Agentic AI Risk Score) — the sum of 10 official factors, each scored 0.0 / 0.5 / 1.0: `autonomyOfAction`, `toolUse`, `memoryUse`, `dynamicIdentity`, `multiAgentInteractions`, `nonDeterminism`, `selfModification`, `goalDrivenPlanning`, `contextualAwareness`, `opacityAndReflexivity`. **We implemented this in full** — `src/agentscanner/aivss.py` uses the official factor names and 0/0.5/1 scale.
+- **AARS** (Agentic AI Risk Score) — the sum of 10 official factors, each scored 0.0 / 0.5 / 1.0: `autonomyOfAction`, `toolUse`, `memoryUse`, `dynamicIdentity`, `multiAgentInteractions`, `nonDeterminism`, `selfModification`, `goalDrivenPlanning`, `contextualAwareness`, `opacityAndReflexivity`. **We implemented this in full** — `src/aisecscan/aivss.py` uses the official factor names and 0/0.5/1 scale.
 - **ThM** (Threat Multiplier) — defaults to the spec's own recommended starting point, `0.97` ("exploit technique known, not confirmed weaponized"). Override with `--aivss-thm` (spec guidance: `1.0` if actively exploited in the wild, `~0.91` if no known exploit exists).
 - **CVSS_Base_Score** — **we deliberately did not build a full CVSS v4.0 calculator.** That requires per-instance exploitability metrics (attack vector, attack complexity, privileges required, user interaction, scope, ...) that a static config scanner does not have — our findings are misconfigurations, not a specific exploited flaw in a specific running instance. A hand-rolled CVSS v4.0 macro-vector engine fed with fabricated instance data would produce false precision, not accuracy. Instead, each check's existing `Severity` is anchored to the score NVD itself uses as the midpoint of the equivalent qualitative CVSS band: `CRITICAL→9.5, HIGH→7.5, MEDIUM→5.5, LOW→2.5`. This is a documented approximation — recompute per-instance with the real CVSS v4.0 calculator if you need a fully official number for a specific finding.
 
@@ -32,14 +32,14 @@ The v0.5 spec scores its own 10 **Core Risk categories** (e.g. "Agentic AI Tool 
 | `governance_gap` | Missing provenance/signature/version — not an active exploit, removes detectability | `AS-SKILL-003/006/009/011/012` |
 | `hygiene` | Real but low agentic amplification (bounds blast radius rather than enabling it) | `AS-HOOK-004` |
 
-The full mapping and vectors are in `src/agentscanner/aivss.py` (`CHECK_ARCHETYPES`, `_ARCHETYPES`) — read the source, not this table, for the authoritative values; a test (`tests/test_aivss.py::test_every_registered_check_has_an_archetype`) fails CI if a new check ships without one.
+The full mapping and vectors are in `src/aisecscan/aivss.py` (`CHECK_ARCHETYPES`, `_ARCHETYPES`) — read the source, not this table, for the authoritative values; a test (`tests/test_aivss.py::test_every_registered_check_has_an_archetype`) fails CI if a new check ships without one.
 
 ## Usage
 
 ```bash
-agentscanner scan . --aivss                       # add AIVSS column/field, default ThM=0.97
-agentscanner scan . --aivss --aivss-thm 1.0        # known actively-exploited technique
-agentscanner scan . --aivss --output json          # adds an "aivss" object per finding
+aisecscan scan . --aivss                       # add AIVSS column/field, default ThM=0.97
+aisecscan scan . --aivss --aivss-thm 1.0        # known actively-exploited technique
+aisecscan scan . --aivss --output json          # adds an "aivss" object per finding
 ```
 
 Not yet in `--output sarif` — SARIF 2.1.0's result shape doesn't have a natural slot for a second numeric score; open to adding it as a property bag if that's useful.
@@ -49,8 +49,8 @@ Not yet in `--output sarif` — SARIF 2.1.0's result shape doesn't have a natura
 Given a check ID, severity, and ThM, the score is pure arithmetic — no LLM call, no network, no randomness:
 
 ```python
-from agentscanner import aivss
-from agentscanner.models import Severity
+from aisecscan import aivss
+from aisecscan.models import Severity
 
 result = aivss.score_finding("AS-HOOK-001", Severity.CRITICAL, thm=0.97)
 print(result.score, result.vector)  # 7.0 (CVSS:9.5/AARS:5.0)xThM:0.97

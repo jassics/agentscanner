@@ -3,8 +3,8 @@
 ## Setup
 
 ```bash
-git clone https://github.com/jassics/agentscanner
-cd agentscanner
+git clone https://github.com/jassics/aisecscan
+cd aisecscan
 pip install -e ".[dev]"
 ```
 
@@ -24,7 +24,7 @@ The test suite uses paired fixtures: `tests/fixtures/bad/` holds one minimal art
 
 ## Writing a new check
 
-1. Choose the right module under `src/agentscanner/checks/` (or add a new one for a new category).
+1. Choose the right module under `src/aisecscan/checks/` (or add a new one for a new category).
 2. Subclass `Check` from `checks/base.py` and implement `run(resource) -> list[Finding]`.
 3. Declare `check_id`, `severity`, `title`, `applies_to`, and `message` as class attributes.
 4. Register the check with the `@register` decorator.
@@ -32,8 +32,8 @@ The test suite uses paired fixtures: `tests/fixtures/bad/` holds one minimal art
 6. Verify the `hardened/settings.json` still scans clean after your change.
 
 ```python
-from agentscanner.checks.base import Check, register
-from agentscanner.models import Finding, Severity, ArtifactType
+from aisecscan.checks.base import Check, register
+from aisecscan.models import Finding, Severity, ArtifactType
 
 @register
 class MyNewCheck(Check):
@@ -72,4 +72,4 @@ class MyNewCheck(Check):
 
 ## Licensing
 
-All contributed checks must be independently authored. Do not copy rule text, patterns, or taxonomy from GPL-licensed sources (e.g. `awesome-claude-security`). `agentscanner` is Apache-2.0 and must remain compatible with that license.
+All contributed checks must be independently authored. Do not copy rule text, patterns, or taxonomy from GPL-licensed sources (e.g. `awesome-claude-security`). `aisecscan` is Apache-2.0 and must remain compatible with that license.

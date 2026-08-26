@@ -3,14 +3,14 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "agentscanner"
+name = "aisecscan"
 dynamic = ["version"]
-description = "Static security scanner for agentic AI configuration: settings, permissions, hooks, MCP servers, agents, skills, and steering files (Checkov for AI agent stacks)."
+description = "Static security scanner for AI/LLM/agentic repos: any AI coding assistant config (Claude, Cursor, Copilot, Windsurf, Cline, ...), MCP servers, agents, skills, LLM app code, and AI supply chain (Checkov for AI agent stacks)."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "Apache-2.0" }
 authors = [{ name = "Sanjeev Jaiswal (Jassi)", email = "jassics@gmail.com" }]
-keywords = ["agentic-ai", "agent-security", "security", "sast", "static-analysis", "mcp", "llm-security", "devsecops", "claude-code"]
+keywords = ["agentic-ai", "agent-security", "security", "sast", "static-analysis", "mcp", "llm-security", "devsecops", "claude-code", "cursor", "ai-supply-chain", "owasp"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
@@ -26,18 +26,18 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/jassics/agentscanner"
-Documentation = "https://jassics.github.io/agentscanner"
-Issues = "https://github.com/jassics/agentscanner/issues"
+Homepage = "https://github.com/jassics/aisecscan"
+Documentation = "https://jassics.github.io/aisecscan"
+Issues = "https://github.com/jassics/aisecscan/issues"
 
 [project.scripts]
-agentscanner = "agentscanner.cli:app"
+aisecscan = "aisecscan.cli:app"
 
 [tool.hatch.version]
-path = "src/agentscanner/__init__.py"
+path = "src/aisecscan/__init__.py"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/agentscanner"]
+packages = ["src/aisecscan"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

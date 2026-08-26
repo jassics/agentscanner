@@ -3,10 +3,10 @@
 Three deliberate design choices, each different from the obvious "copy
 SkillSpector's SC4" approach:
 
-1. **Disk-backed cache, not in-memory.** agentscanner is a short-lived CLI
+1. **Disk-backed cache, not in-memory.** aisecscan is a short-lived CLI
    process — an in-memory cache buys nothing across separate ``scan``
    invocations (e.g. one per pre-commit run, one per CI job). Results are
-   cached to ``~/.cache/agentscanner/osv_cache.json`` with a TTL, so repeated
+   cached to ``~/.cache/aisecscan/osv_cache.json`` with a TTL, so repeated
    scans of the same repo/CI pipeline don't re-hit the network for unchanged
    dependencies.
 
@@ -37,8 +37,8 @@ from typing import List, Optional
 from .models import Severity
 
 _OSV_URL = "https://api.osv.dev/v1/query"
-_TIMEOUT = float(os.environ.get("AGENTSCANNER_OSV_TIMEOUT", "3.0"))
-_CACHE_TTL = int(os.environ.get("AGENTSCANNER_OSV_CACHE_TTL", str(24 * 3600)))
+_TIMEOUT = float(os.environ.get("AISECSCAN_OSV_TIMEOUT", "3.0"))
+_CACHE_TTL = int(os.environ.get("AISECSCAN_OSV_CACHE_TTL", str(24 * 3600)))
 
 _SEVERITY_MAP = {
     "CRITICAL": Severity.CRITICAL,
@@ -50,13 +50,13 @@ _SEVERITY_MAP = {
 
 
 def is_offline() -> bool:
-    """True when ``--offline`` (via ``AGENTSCANNER_OFFLINE``) was requested."""
-    return os.environ.get("AGENTSCANNER_OFFLINE", "").strip().lower() in ("1", "true", "yes")
+    """True when ``--offline`` (via ``AISECSCAN_OFFLINE``) was requested."""
+    return os.environ.get("AISECSCAN_OFFLINE", "").strip().lower() in ("1", "true", "yes")
 
 
 def _cache_dir() -> Path:
     base = os.environ.get("XDG_CACHE_HOME") or str(Path.home() / ".cache")
-    d = Path(base) / "agentscanner"
+    d = Path(base) / "aisecscan"
     try:
         d.mkdir(parents=True, exist_ok=True)
     except OSError:

@@ -1,24 +1,32 @@
 <p align="center">
-  <img src="assets/banner.png" alt="agentscanner — static security scanner for Claude Code configuration" width="100%">
+  <img src="assets/banner.png" alt="aisecscan — static security scanner for AI/LLM/agentic repos" width="100%">
 </p>
 
-# agentscanner
+# aisecscan
 
-**Static security scanner for Claude Code configuration** — settings,
-permissions, hooks, MCP servers, agents/subagents, skills, slash commands, and
-`CLAUDE.md`. Think *Checkov / Terrascan, but for your `.claude/` directory.*
+**Static security scanner for AI/LLM/agentic repos** — the config and code
+that make an AI agent do things: settings, permissions, hooks, MCP servers,
+agents/subagents, skills, slash commands, and `CLAUDE.md`. Think *Checkov /
+Terrascan, but for your AI stack.*
 
-Claude Code is customized through powerful, trust-bearing artifacts: a hook is
-arbitrary code that runs on every tool call; an MCP server is an arbitrary
+> **v1.0 scope:** full check coverage today is Claude Code (`.claude/`,
+> `.mcp.json`, `CLAUDE.md`). Discovery for other AI coding assistants (Cursor,
+> Copilot, Windsurf, Cline) plus LLM app-code and AI-supply-chain checks are
+> on the roadmap — see [Roadmap](#roadmap) below. Renamed from `agentscanner`
+> to reflect that direction.
+
+AI coding assistants are customized through powerful, trust-bearing artifacts: a
+hook is arbitrary code that runs on every tool call; an MCP server is an arbitrary
 process; a permission rule decides what the agent may do without asking; a skill
-or `CLAUDE.md` is untrusted text that steers the model. Misconfigurations and
-malicious contributions create real risk — code execution, credential exfil,
-permission bypass, supply-chain compromise, and prompt injection. `agentscanner` finds
-them.
+or steering file (`CLAUDE.md`, `.cursor/rules`, ...) is untrusted text that
+steers the model. Misconfigurations and malicious contributions create real
+risk — code execution, credential exfil, permission bypass, supply-chain
+compromise, and prompt injection. `aisecscan` finds them, and maps findings to
+OWASP's LLM/Agentic/Agentic-Skills Top 10 and AIVSS severity where applicable.
 
 ## Core safety invariant
 
-> **agentscanner never executes what it parses.** It does not run hook commands,
+> **aisecscan never executes what it parses.** It does not run hook commands,
 > launch MCP servers, resolve `apiKeyHelper`/`statusLine` scripts, or fetch any
 > URL. It reads untrusted config as *data only* — the moment a scanner execs its
 > input, it becomes the vulnerability.
@@ -26,18 +34,18 @@ them.
 ## Install
 
 ```bash
-pip install agentscanner        # or: pipx install agentscanner / uvx agentscanner
+pip install aisecscan        # or: pipx install aisecscan / uvx aisecscan
 ```
 
 ## Usage
 
 ```bash
-agentscanner scan .                       # scan the current repo's .claude/, .mcp.json, CLAUDE.md
-agentscanner scan . --include-user        # also scan ~/.claude (user scope)
-agentscanner scan . --severity-threshold HIGH
-agentscanner scan . --output sarif --output-file agentscanner.sarif   # for GitHub code scanning
-agentscanner scan . --fail-on HIGH        # CI gate: nonzero exit on HIGH+ findings
-agentscanner list-checks                  # show the check catalog
+aisecscan scan .                       # scan the current repo's .claude/, .mcp.json, CLAUDE.md
+aisecscan scan . --include-user        # also scan ~/.claude (user scope)
+aisecscan scan . --severity-threshold HIGH
+aisecscan scan . --output sarif --output-file aisecscan.sarif   # for GitHub code scanning
+aisecscan scan . --fail-on HIGH        # CI gate: nonzero exit on HIGH+ findings
+aisecscan list-checks                  # show the check catalog
 ```
 
 Every resource is tagged with its **scope** (project / local / user / managed /
@@ -84,10 +92,10 @@ config lives in [`hardened/`](hardened/).
 GitHub Actions (SARIF upload to code scanning):
 
 ```yaml
-- run: pipx install agentscanner
-- run: agentscanner scan . --output sarif --output-file agentscanner.sarif --soft-fail
+- run: pipx install aisecscan
+- run: aisecscan scan . --output sarif --output-file aisecscan.sarif --soft-fail
 - uses: github/codeql-action/upload-sarif@v3
-  with: { sarif_file: agentscanner.sarif }
+  with: { sarif_file: aisecscan.sarif }
 ```
 
 pre-commit:
@@ -95,12 +103,21 @@ pre-commit:
 ```yaml
 - repo: local
   hooks:
-    - id: agentscanner
-      name: agentscanner
-      entry: agentscanner scan . --fail-on HIGH
+    - id: aisecscan
+      name: aisecscan
+      entry: aisecscan scan . --fail-on HIGH
       language: system
       pass_filenames: false
 ```
+
+## Roadmap
+
+- **Multi-assistant discovery** — Cursor `.cursor/rules`, GitHub Copilot instructions, Windsurf, Cline configs, alongside Claude Code (not just `.claude/`).
+- **LLM app-code checks** — unsafe prompt concatenation of untrusted input, hardcoded model API keys, missing/unsafe output handling.
+- **AI supply-chain checks** — model source pinning/provenance, unpinned model/skill registries; cross-links to [`ModelScan`](https://github.com/protectai/modelscan) for model-file deserialization rather than duplicating it.
+- **Zero-trust / agent-identity checks** — shared credentials across agent identities, no credential TTL/refresh, confused-deputy pattern (untrusted-input ingestion + write/publish capability with no re-authorization gate), permission inheritance on sub-agent spawn. Maps to OWASP Agentic Top 10 ASI03 (Identity and Privilege Abuse) and AIVSS Agent Identity Impersonation / Agent Untraceability.
+
+Track progress and file requests in [Issues](https://github.com/jassics/aisecscan/issues).
 
 ## Prior art & license
 

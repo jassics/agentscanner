@@ -1,10 +1,13 @@
-# Claude Code Configuration Security Scanner — Design Document
+# aisecscan — Design Document
 
-> Working title: **`agentscanner`** (Claude + audit). A Checkov/Terrascan-style static
-> analyzer for Claude Code configuration artifacts: settings, permissions, hooks,
-> MCP servers, agents/subagents, skills, slash commands, and `CLAUDE.md` memory.
+> Renamed from `agentscanner` (v1.0). A Checkov/Terrascan-style static
+> analyzer for AI/LLM/agentic repos. v1.0 check coverage is Claude Code
+> configuration artifacts: settings, permissions, hooks, MCP servers,
+> agents/subagents, skills, slash commands, and `CLAUDE.md` memory.
+> Multi-assistant discovery, LLM app-code, AI-supply-chain, and
+> zero-trust/agent-identity checks are roadmap items — see README.
 
-Status: **DRAFT for review** · Owner: sanjeev.k2 · Last updated: 2026-06-15
+Status: **DRAFT for review** · Owner: sanjeev.k2 · Last updated: 2026-08-25
 
 ---
 
@@ -23,7 +26,7 @@ Misconfigurations and malicious contributions in these files create real risk:
 compromise, and prompt injection** — yet there is no `checkov` for them. Reviewers
 eyeball JSON and Markdown by hand, and CI has nothing to gate on.
 
-`agentscanner` fills that gap: a fast, **static, read-only** scanner that discovers
+`aisecscan` fills that gap: a fast, **static, read-only** scanner that discovers
 Claude Code artifacts, evaluates them against a curated policy catalog, and emits
 prioritized, framework-mapped findings (CLI table, JSON, SARIF) suitable for local
 use, pre-commit, and CI.
@@ -39,7 +42,7 @@ use, pre-commit, and CI.
 
 ## 2. Core security invariant — the scanner never executes what it parses
 
-`agentscanner` ingests *untrusted* config and prompt files. The single most important
+`aisecscan` ingests *untrusted* config and prompt files. The single most important
 property: **it MUST NOT execute, source, shell-expand, resolve, or network-fetch
 anything it reads.**
 
@@ -148,7 +151,7 @@ framework mapping. Severities: `CRITICAL / HIGH / MEDIUM / LOW / INFO`.
                  └─────┬──────┘  (single-file checks now; cross-file class = v2)
                        │
                  ┌─────▼──────┐  baseline/suppression, severity threshold,
-                 │  Findings  │  inline `# agentscanner:ignore CC-XXX` directives
+                 │  Findings  │  inline `# aisecscan:ignore CC-XXX` directives
                  └─────┬──────┘
                        │
                  ┌─────▼──────┐  CLI table · JSON · SARIF (GitHub code scanning)
@@ -170,12 +173,12 @@ framework mapping. Severities: `CRITICAL / HIGH / MEDIUM / LOW / INFO`.
    community-contributable rules — loaded from a built-in dir and `--policy-dir`.
 5. **Rules are independently authored.** The `awesome-claude-security` repo
    (GPL-3.0) is used as *inspiration and as a fixture corpus to scan*, never as
-   copied rule text/taxonomy — keeping `agentscanner` free to license permissively
+   copied rule text/taxonomy — keeping `aisecscan` free to license permissively
    (Apache-2.0 proposed). See §10.
 
 ### Module layout
 ```
-src/agentscanner/
+src/aisecscan/
   cli.py            # Typer CLI
   models.py         # Severity, ArtifactType, Resource (IR), Finding
   discovery.py      # scope walking + classification
@@ -195,7 +198,7 @@ tests/fixtures/{bad,good}/   # paired per-check fixtures (see §8)
 ## 7. CLI UX (Checkov-flavored)
 
 ```
-agentscanner scan [PATH]                 # default: scan ./ (+ optional --include-user)
+aisecscan scan [PATH]                 # default: scan ./ (+ optional --include-user)
   --include-user                    # also scan ~/.claude
   --framework all|settings|hooks|mcp|agents|skills|prompts
   --check AS-HOOK-001,...           # run only these
@@ -203,13 +206,13 @@ agentscanner scan [PATH]                 # default: scan ./ (+ optional --includ
   --severity-threshold HIGH         # only report >= threshold
   --output cli|json|sarif           # default cli
   --output-file results.sarif
-  --baseline .agentscanner.baseline.json # suppress known/accepted findings
-  --config .agentscanner.yaml            # project config (skips, thresholds, policy-dir)
+  --baseline .aisecscan.baseline.json # suppress known/accepted findings
+  --config .aisecscan.yaml            # project config (skips, thresholds, policy-dir)
   --policy-dir ./policies           # load custom YAML policies
   --fail-on HIGH                    # exit nonzero if any finding >= level (CI gate)
   --soft-fail                       # always exit 0
-agentscanner list-checks                 # print catalog (id, severity, title)
-agentscanner version
+aisecscan list-checks                 # print catalog (id, severity, title)
+aisecscan version
 ```
 
 > **v1 implements a subset of the flags above.** Shipped now: `scan` (with
@@ -218,7 +221,7 @@ agentscanner version
 > `version`. **Roadmap:** `--baseline`, `--config`, `--policy-dir` and the
 > declarative-YAML policy engine (the `policies/` dir). v1 ships Python-coded
 > checks only; shared patterns live in `data.py` (not a separate `data/` dir).
-Distribution: **PyPI** (`pip install agentscanner` / `pipx`/`uvx`), plus a published
+Distribution: **PyPI** (`pip install aisecscan` / `pipx`/`uvx`), plus a published
 **pre-commit hook** and a **GitHub Action** wrapper. Python 3.9+.
 
 ---
@@ -232,7 +235,7 @@ reference settings are the canonical known-good fixture**, and every hardening
 choice maps 1:1 to a check — the hardened config and the catalog are duals.
 
 Additional verification:
-- Run `agentscanner` against **real corpora**: this machine's `~/.claude` (settings,
+- Run `aisecscan` against **real corpora**: this machine's `~/.claude` (settings,
   hooks, agents, skills) and a checkout of `awesome-claude-security` — confirm
   signal, measure false-positive rate, hand-triage.
 - Golden-output snapshot tests for JSON/SARIF.
@@ -253,10 +256,10 @@ satisfies, making the file both documentation and the primary good-fixture.
 
 ## 10. Licensing & provenance
 
-- **`agentscanner` license: Apache-2.0** (permissive; PyPI-friendly).
+- **`aisecscan` license: Apache-2.0** (permissive; PyPI-friendly).
 - `awesome-claude-security` is **GPL-3.0**. We treat it strictly as *inspiration*
   and as an input corpus to scan; we do **not** copy its rule text, taxonomy, or
-  structure into the package (which could force GPL on `agentscanner`). Cited as prior
+  structure into the package (which could force GPL on `aisecscan`). Cited as prior
   art in README, not vendored.
 
 ---

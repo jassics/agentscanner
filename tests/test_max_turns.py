@@ -8,9 +8,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from agentscanner.checks.agents_skills import AgentUnboundedTurns
-from agentscanner.models import ArtifactType, Scope, Severity
-from agentscanner.parsers.markdown_parser import parse_markdown
+from aisecscan.checks.agents_skills import AgentUnboundedTurns
+from aisecscan.models import ArtifactType, Scope, Severity
+from aisecscan.parsers.markdown_parser import parse_markdown
 
 
 def _agent(tmp_path: Path, extra_frontmatter: str) -> Path:

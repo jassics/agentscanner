@@ -13,7 +13,7 @@ CHECK_REGISTRY: Dict[str, "Check"] = {}
 
 
 class Check:
-    """Abstract base class for all agentscanner checks.
+    """Abstract base class for all aisecscan checks.
 
     Subclass this, declare the class attributes, implement :meth:`analyze`,
     and decorate with :func:`register` to add a check to the scanner.
@@ -40,11 +40,11 @@ class Check:
     model_sensitive: bool = False
 
     def analyze(self, resource: Resource) -> Iterable[Finding]:  # pragma: no cover
-        """Inspect *resource* and yield zero or more :class:`~agentscanner.models.Finding` objects."""
+        """Inspect *resource* and yield zero or more :class:`~aisecscan.models.Finding` objects."""
         raise NotImplementedError
 
     def finding(self, resource: Resource, message: str, line: int = 1) -> Finding:
-        """Build a :class:`~agentscanner.models.Finding` pre-populated with this check's metadata."""
+        """Build a :class:`~aisecscan.models.Finding` pre-populated with this check's metadata."""
         return Finding(
             check_id=self.id,
             severity=self.severity,

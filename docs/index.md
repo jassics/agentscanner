@@ -1,44 +1,46 @@
-![agentscanner — static security scanner for Claude Code configuration](assets/banner.png){ width="100%" }
+![aisecscan — static security scanner for AI/LLM/agentic repos](assets/banner.png){ width="100%" }
 
-# agentscanner
+# aisecscan
 
-**Static security scanner for Claude Code configuration** — settings, permissions, hooks, MCP servers, agents/subagents, skills, slash commands, and `CLAUDE.md`. Think *Checkov / Terrascan, but for your `.claude/` directory.*
+**Static security scanner for AI/LLM/agentic repos** — settings, permissions, hooks, MCP servers, agents/subagents, skills, slash commands, and steering files. Think *Checkov / Terrascan, but for your AI stack.*
 
-Claude Code is customized through powerful, trust-bearing artifacts: a hook is arbitrary code that runs on every tool call; an MCP server is an arbitrary process; a permission rule decides what the agent may do without asking; a skill or `CLAUDE.md` is untrusted text that steers the model. Misconfigurations and malicious contributions create real risk — code execution, credential exfil, permission bypass, supply-chain compromise, and prompt injection. `agentscanner` finds them.
+v1.0 check coverage is Claude Code (`.claude/`, `.mcp.json`, `CLAUDE.md`); multi-assistant discovery (Cursor, Copilot, Windsurf, Cline), LLM app-code checks, AI supply-chain checks, and zero-trust/agent-identity checks are on the roadmap. Renamed from `agentscanner`.
+
+AI coding assistants are customized through powerful, trust-bearing artifacts: a hook is arbitrary code that runs on every tool call; an MCP server is an arbitrary process; a permission rule decides what the agent may do without asking; a skill or steering file is untrusted text that steers the model. Misconfigurations and malicious contributions create real risk — code execution, credential exfil, permission bypass, supply-chain compromise, and prompt injection. `aisecscan` finds them.
 
 ## Core safety invariant
 
 !!! important
-    **agentscanner never executes what it parses.** It does not run hook commands, launch MCP servers, resolve `apiKeyHelper`/`statusLine` scripts, or fetch any URL. It reads untrusted config as *data only* — the moment a scanner execs its input, it becomes the vulnerability.
+    **aisecscan never executes what it parses.** It does not run hook commands, launch MCP servers, resolve `apiKeyHelper`/`statusLine` scripts, or fetch any URL. It reads untrusted config as *data only* — the moment a scanner execs its input, it becomes the vulnerability.
 
 ## Install
 
 ```bash
-pip install agentscanner        # standard
-pipx install agentscanner       # isolated env (recommended for CLI tools)
-uvx agentscanner                # ephemeral run — no install needed
+pip install aisecscan        # standard
+pipx install aisecscan       # isolated env (recommended for CLI tools)
+uvx aisecscan                # ephemeral run — no install needed
 ```
 
 ## Quick start
 
 ```bash
 # Scan the current repo's .claude/, .mcp.json, CLAUDE.md
-agentscanner scan .
+aisecscan scan .
 
 # Also scan your ~/.claude (user scope)
-agentscanner scan . --include-user
+aisecscan scan . --include-user
 
 # Only report HIGH and above
-agentscanner scan . --severity-threshold HIGH
+aisecscan scan . --severity-threshold HIGH
 
 # CI gate: nonzero exit on any HIGH+ finding
-agentscanner scan . --fail-on HIGH
+aisecscan scan . --fail-on HIGH
 
 # SARIF output for GitHub code scanning
-agentscanner scan . --output sarif --output-file agentscanner.sarif
+aisecscan scan . --output sarif --output-file aisecscan.sarif
 
 # Browse the full check catalog
-agentscanner list-checks
+aisecscan list-checks
 ```
 
 Every resource is tagged with its **scope** (project / local / user / managed / plugin), so a single run cleanly covers a repo, your global config, or both.

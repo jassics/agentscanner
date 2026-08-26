@@ -4,42 +4,42 @@ Auto-generated from source docstrings.
 
 ## Models
 
-::: agentscanner.models
+::: aisecscan.models
 
 ## Discovery
 
-::: agentscanner.discovery
+::: aisecscan.discovery
 
 ## Engine
 
-::: agentscanner.engine
+::: aisecscan.engine
 
 ## Checks
 
 ### Base
 
-::: agentscanner.checks.base
+::: aisecscan.checks.base
 
 ### Hooks
 
-::: agentscanner.checks.hooks
+::: aisecscan.checks.hooks
 
 ### Permissions
 
-::: agentscanner.checks.permissions
+::: aisecscan.checks.permissions
 
 ### MCP
 
-::: agentscanner.checks.mcp
+::: aisecscan.checks.mcp
 
 ### Environment & Secrets
 
-::: agentscanner.checks.env_secrets
+::: aisecscan.checks.env_secrets
 
 ### Agents & Skills
 
-::: agentscanner.checks.agents_skills
+::: aisecscan.checks.agents_skills
 
 ### Prompts
 
-::: agentscanner.checks.prompts
+::: aisecscan.checks.prompts

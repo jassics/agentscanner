@@ -3,9 +3,9 @@ from __future__ import annotations
 
 import pytest
 
-from agentscanner import aivss
-from agentscanner.checks import CHECK_REGISTRY
-from agentscanner.models import Severity
+from aisecscan import aivss
+from aisecscan.checks import CHECK_REGISTRY
+from aisecscan.models import Severity
 
 
 def test_every_registered_check_has_an_archetype():

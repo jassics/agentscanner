@@ -5,11 +5,11 @@ from pathlib import Path
 
 import pytest
 
-from agentscanner.discovery import discover
-from agentscanner.engine import run_checks
-from agentscanner.models import ArtifactType, Severity
-from agentscanner.parsers.json_parser import parse_json
-from agentscanner.models import Scope
+from aisecscan.discovery import discover
+from aisecscan.engine import run_checks
+from aisecscan.models import ArtifactType, Severity
+from aisecscan.parsers.json_parser import parse_json
+from aisecscan.models import Scope
 
 FIXTURES = Path(__file__).parent / "fixtures"
 REPO = Path(__file__).parent.parent
@@ -71,7 +71,7 @@ def test_bad_fixture_triggers(expected):
 def test_every_registered_check_has_coverage():
     """Guard: every check must fire on the bad fixtures — a rule that never
     triggers could be silently broken (false negatives on every clean scan)."""
-    from agentscanner.checks import CHECK_REGISTRY
+    from aisecscan.checks import CHECK_REGISTRY
 
     ids, _ = ids_for(FIXTURES / "bad")
     registered = set(CHECK_REGISTRY)

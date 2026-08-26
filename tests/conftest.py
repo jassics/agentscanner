@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import pytest
 
-from agentscanner import osv
+from aisecscan import osv
 
 # Deterministic canned responses for the fixture packages used across
 # tests/fixtures/bad and tests/fixtures/dep-bad.

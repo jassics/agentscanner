@@ -3,7 +3,7 @@
 ## CLI reference
 
 ```
-agentscanner scan [PATH]
+aisecscan scan [PATH]
   --include-user              also scan ~/.claude (user scope)
   --framework all|settings|hooks|mcp|agents|skills|prompts
   --check AS-HOOK-001,...     run only these checks
@@ -14,8 +14,8 @@ agentscanner scan [PATH]
   --fail-on HIGH              exit nonzero if any finding >= level
   --soft-fail                 always exit 0 (useful for SARIF-only pipelines)
 
-agentscanner list-checks      print catalog (id, severity, title)
-agentscanner version
+aisecscan list-checks      print catalog (id, severity, title)
+aisecscan version
 ```
 
 ---
@@ -25,7 +25,7 @@ agentscanner version
 Upload findings to GitHub code scanning so they appear as security alerts on PRs and in the Security tab.
 
 ```yaml
-name: agentscanner
+name: aisecscan
 
 on:
   push:
@@ -39,11 +39,11 @@ jobs:
       security-events: write
     steps:
       - uses: actions/checkout@v4
-      - run: pipx install agentscanner
-      - run: agentscanner scan . --output sarif --output-file agentscanner.sarif --soft-fail
+      - run: pipx install aisecscan
+      - run: aisecscan scan . --output sarif --output-file aisecscan.sarif --soft-fail
       - uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: agentscanner.sarif
+          sarif_file: aisecscan.sarif
 ```
 
 `--soft-fail` ensures the workflow step exits 0 so SARIF upload always runs, even when findings exist. The alerts surface in GitHub's Security tab instead of blocking the workflow step.
@@ -51,7 +51,7 @@ jobs:
 To block PRs on HIGH+ findings, drop `--soft-fail` and add `--fail-on HIGH`:
 
 ```yaml
-- run: agentscanner scan . --output sarif --output-file agentscanner.sarif --fail-on HIGH
+- run: aisecscan scan . --output sarif --output-file aisecscan.sarif --fail-on HIGH
 ```
 
 ---
@@ -65,9 +65,9 @@ Block commits that introduce HIGH or above findings:
 repos:
   - repo: local
     hooks:
-      - id: agentscanner
-        name: agentscanner
-        entry: agentscanner scan . --fail-on HIGH
+      - id: aisecscan
+        name: aisecscan
+        entry: aisecscan scan . --fail-on HIGH
         language: system
         pass_filenames: false
 ```
@@ -84,7 +84,7 @@ pre-commit install
 ## JSON output for custom pipelines
 
 ```bash
-agentscanner scan . --output json --output-file findings.json
+aisecscan scan . --output json --output-file findings.json
 ```
 
 Output schema:

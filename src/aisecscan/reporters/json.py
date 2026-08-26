@@ -23,7 +23,7 @@ def render(
             d["aivss"] = aivss.score_finding(f.check_id, f.severity, thm).to_dict()
         finding_dicts.append(d)
     doc = {
-        "tool": "agentscanner",
+        "tool": "aisecscan",
         "summary": {
             "resources_scanned": scanned,
             "findings": len(findings),

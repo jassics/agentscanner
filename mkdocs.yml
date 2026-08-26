@@ -1,8 +1,8 @@
-site_name: agentscanner
+site_name: aisecscan
 site_description: Static security scanner for Claude Code configuration — settings, permissions, hooks, MCP servers, agents, skills, and steering files.
-site_url: https://jassics.github.io/agentscanner
-repo_url: https://github.com/jassics/agentscanner
-repo_name: jassics/agentscanner
+site_url: https://jassics.github.io/aisecscan
+repo_url: https://github.com/jassics/aisecscan
+repo_name: jassics/aisecscan
 edit_uri: edit/main/docs/
 
 theme:
@@ -74,6 +74,6 @@ extra_css:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/jassics/agentscanner
+      link: https://github.com/jassics/aisecscan
     - icon: fontawesome/brands/python
-      link: https://pypi.org/project/agentscanner/
+      link: https://pypi.org/project/aisecscan/

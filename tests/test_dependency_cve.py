@@ -10,11 +10,11 @@ from pathlib import Path
 
 import pytest
 
-from agentscanner import osv
-from agentscanner.discovery import discover
-from agentscanner.engine import run_checks
-from agentscanner.models import Severity
-from agentscanner.parsers.dependency_parser import (
+from aisecscan import osv
+from aisecscan.discovery import discover
+from aisecscan.engine import run_checks
+from aisecscan.models import Severity
+from aisecscan.parsers.dependency_parser import (
     _parse_package_json,
     _parse_requirements,
 )
@@ -79,7 +79,7 @@ def test_as_mcp_005_fires_for_pinned_vulnerable_npx_package(monkeypatch):
 
 
 def test_offline_mode_skips_lookup_without_crashing(monkeypatch):
-    monkeypatch.setenv("AGENTSCANNER_OFFLINE", "1")
+    monkeypatch.setenv("AISECSCAN_OFFLINE", "1")
     called = []
 
     def _spy(*args, **kwargs):

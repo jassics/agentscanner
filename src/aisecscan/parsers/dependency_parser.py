@@ -64,7 +64,7 @@ def _parse_package_json(text: str) -> List[dict]:
 
 def parse_dependency_manifest(path: Path, scope: Scope) -> Resource:
     """Read *path* (a requirements.txt or package.json) into a
-    :class:`~agentscanner.models.Resource` of type ``DEPENDENCY``."""
+    :class:`~aisecscan.models.Resource` of type ``DEPENDENCY``."""
     raw = path.read_text(encoding="utf-8", errors="replace")
     res = Resource(type=ArtifactType.DEPENDENCY, path=path, scope=scope, raw_text=raw)
     try:

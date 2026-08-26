@@ -3,10 +3,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from agentscanner.checks import get_checks
-from agentscanner.discovery import discover
-from agentscanner.engine import apply_model_tier, run_checks
-from agentscanner.models import Severity
+from aisecscan.checks import get_checks
+from aisecscan.discovery import discover
+from aisecscan.engine import apply_model_tier, run_checks
+from aisecscan.models import Severity
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

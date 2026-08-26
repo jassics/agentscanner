@@ -6,9 +6,9 @@ fallback, which is practically unbounded.
 """
 from __future__ import annotations
 
-from agentscanner.checks.mcp import McpStdioNoTimeout
-from agentscanner.models import ArtifactType, Scope
-from agentscanner.parsers.json_parser import parse_json
+from aisecscan.checks.mcp import McpStdioNoTimeout
+from aisecscan.models import ArtifactType, Scope
+from aisecscan.parsers.json_parser import parse_json
 
 
 def _mcp(tmp_path, servers: dict):

@@ -1,8 +1,8 @@
 # Check Catalog
 
-`agentscanner` ships 31 checks across seven categories. Each check is identified by an `AS-<CATEGORY>-NNN` ID and declares a severity, a description, and a framework mapping (OWASP LLM Top 10, OWASP Top 10 for Agentic Applications (ASI01–ASI10), NIST AI RMF).
+`aisecscan` ships 31 checks across seven categories. Each check is identified by an `AS-<CATEGORY>-NNN` ID and declares a severity, a description, and a framework mapping (OWASP LLM Top 10, OWASP Top 10 for Agentic Applications (ASI01–ASI10), NIST AI RMF).
 
-Most checks catch misconfiguration (over-broad permissions, missing pins, hardcoded secrets). A smaller set targets *agentic attack patterns specifically* — combinations of capabilities that enable goal hijacking, memory poisoning, or rogue-agent behavior even when each individual setting looks reasonable on its own: `AS-AGENT-002` (ASI01 Agent Goal Hijack) and `AS-HOOK-005` (ASI06 Memory & Context Poisoning). These don't require reading a skill's bundled script content — they're detectable from the same frontmatter/config `agentscanner` already parses, by looking at *combinations* of declared capabilities rather than any single one.
+Most checks catch misconfiguration (over-broad permissions, missing pins, hardcoded secrets). A smaller set targets *agentic attack patterns specifically* — combinations of capabilities that enable goal hijacking, memory poisoning, or rogue-agent behavior even when each individual setting looks reasonable on its own: `AS-AGENT-002` (ASI01 Agent Goal Hijack) and `AS-HOOK-005` (ASI06 Memory & Context Poisoning). These don't require reading a skill's bundled script content — they're detectable from the same frontmatter/config `aisecscan` already parses, by looking at *combinations* of declared capabilities rather than any single one.
 
 Severities: `CRITICAL` › `HIGH` › `MEDIUM` › `LOW`
 
@@ -86,7 +86,7 @@ Skills can bundle a `requirements.txt` or `package.json`. A pinned dependency wi
 
 \* Severity is taken from the matched OSV advisory. Only pinned versions (`pkg==1.2.3`) are checked — OSV lookups need a concrete version to test against an affected range. Unpinned dependencies aren't silently treated as safe; they're simply out of scope for *this* check.
 
-**Network and offline behavior:** this check calls [OSV.dev](https://osv.dev) (no API key required) and caches results to `~/.cache/agentscanner/osv_cache.json` for 24h. Pass `--offline` to skip the lookup entirely — the check then finds nothing rather than reporting stale or fabricated results. Unlike scanners that ship a bundled "offline CVE list," agentscanner does not: a static list goes stale the day it's written and makes an offline scan look identical to a fully-informed one. `--offline` makes the tradeoff explicit instead of hiding it.
+**Network and offline behavior:** this check calls [OSV.dev](https://osv.dev) (no API key required) and caches results to `~/.cache/aisecscan/osv_cache.json` for 24h. Pass `--offline` to skip the lookup entirely — the check then finds nothing rather than reporting stale or fabricated results. Unlike scanners that ship a bundled "offline CVE list," aisecscan does not: a static list goes stale the day it's written and makes an offline scan look identical to a fully-informed one. `--offline` makes the tradeoff explicit instead of hiding it.
 
 ---
 
@@ -162,27 +162,27 @@ Some checks flag content whose real-world exploitability depends on which model 
 **Static (default, deterministic, offline):**
 
 ```bash
-agentscanner scan . --model-tier low
+aisecscan scan . --model-tier low
 ```
 
 Bumps `model_sensitive` findings one severity level (capped at CRITICAL), reflecting that the content is riskier if it ends up running on a smaller model. `--model-tier high` (the default) leaves severities unchanged. This is a static adjustment based on general model-capability reasoning — it does not test any specific model.
 
-**Dynamic (optional, live, costs tokens — `agentscanner probe`):**
+**Dynamic (optional, live, costs tokens — `aisecscan probe`):**
 
 ```bash
 export ANTHROPIC_API_KEY=sk-ant-...
-agentscanner probe . --model claude-haiku-4-5 --model claude-sonnet-5
+aisecscan probe . --model claude-haiku-4-5 --model claude-sonnet-5
 ```
 
 Actually sends each `model_sensitive` finding's content to the named model(s), using your own API key, and has a judge model assess whether the target complied with an embedded instruction rather than just describing it. Reports `VULNERABLE` / `RESISTANT` / `INCONCLUSIVE` per model per finding.
 
-This is a fundamentally different kind of check from everything else in agentscanner: it is non-deterministic (the same content can probe differently across runs), spends tokens, and is never invoked by `scan`. Treat a `probe` result as a signal to investigate, not a definitive verdict — a single judge call can be wrong. It exists because a static scanner cannot answer "does this specific model actually fall for this," only "does this content look like something that would try."
+This is a fundamentally different kind of check from everything else in aisecscan: it is non-deterministic (the same content can probe differently across runs), spends tokens, and is never invoked by `scan`. Treat a `probe` result as a signal to investigate, not a definitive verdict — a single judge call can be wrong. It exists because a static scanner cannot answer "does this specific model actually fall for this," only "does this content look like something that would try."
 
 ---
 
 ## AIVSS scoring
 
-Every check also carries an [OWASP AIVSS-Agentic](https://aivss.owasp.org) score, surfaced with `agentscanner scan --aivss`. This layers agent-specific risk amplification (autonomy, tool use, memory, multi-agent interaction, etc.) on top of `Severity` — see [AIVSS Scoring](aivss.md) for the formula, what's official-spec vs. our own mapping, and how to reproduce a number by hand.
+Every check also carries an [OWASP AIVSS-Agentic](https://aivss.owasp.org) score, surfaced with `aisecscan scan --aivss`. This layers agent-specific risk amplification (autonomy, tool use, memory, multi-agent interaction, etc.) on top of `Severity` — see [AIVSS Scoring](aivss.md) for the formula, what's official-spec vs. our own mapping, and how to reproduce a number by hand.
 
 ---
 
@@ -191,7 +191,7 @@ Every check also carries an [OWASP AIVSS-Agentic](https://aivss.owasp.org) score
 Add an inline directive on the offending line to suppress a specific check:
 
 ```json
-"defaultMode": "acceptEdits"  // agentscanner:ignore AS-PERM-001
+"defaultMode": "acceptEdits"  // aisecscan:ignore AS-PERM-001
 ```
 
 Or pass `--skip-check AS-PERM-001` on the CLI to skip globally for a run.

@@ -6,9 +6,9 @@ from pathlib import Path
 
 import pytest
 
-from agentscanner import probe
-from agentscanner.parsers.markdown_parser import parse_markdown
-from agentscanner.models import ArtifactType, Scope
+from aisecscan import probe
+from aisecscan.parsers.markdown_parser import parse_markdown
+from aisecscan.models import ArtifactType, Scope
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

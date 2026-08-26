@@ -10,9 +10,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from agentscanner.discovery import discover
-from agentscanner.engine import run_checks
-from agentscanner.models import ArtifactType, Scope
+from aisecscan.discovery import discover
+from aisecscan.engine import run_checks
+from aisecscan.models import ArtifactType, Scope
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

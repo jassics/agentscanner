@@ -6,7 +6,7 @@ Developers and product teams increasingly drive their SDLC through Claude Code, 
 
 Misconfigurations and malicious contributions in these files create real risk: **code execution, credential exfiltration, permission bypass, supply-chain compromise, and prompt injection** — yet there is no `checkov` for them. Reviewers eyeball JSON and Markdown by hand, and CI has nothing to gate on.
 
-`agentscanner` fills that gap: a fast, **static, read-only** scanner that discovers Claude Code artifacts, evaluates them against a curated policy catalog, and emits prioritized, framework-mapped findings (CLI table, JSON, SARIF) suitable for local use, pre-commit, and CI.
+`aisecscan` fills that gap: a fast, **static, read-only** scanner that discovers Claude Code artifacts, evaluates them against a curated policy catalog, and emits prioritized, framework-mapped findings (CLI table, JSON, SARIF) suitable for local use, pre-commit, and CI.
 
 ### Non-goals (v1)
 
@@ -19,7 +19,7 @@ Misconfigurations and malicious contributions in these files create real risk: *
 ## Core security invariant
 
 !!! danger "The scanner never executes what it parses"
-    `agentscanner` ingests *untrusted* config and prompt files. The single most important property: **it MUST NOT execute, source, shell-expand, resolve, or network-fetch anything it reads.**
+    `aisecscan` ingests *untrusted* config and prompt files. The single most important property: **it MUST NOT execute, source, shell-expand, resolve, or network-fetch anything it reads.**
 
     - No running hook commands, `apiKeyHelper`, `statusLine`, or `awsCredentialExport` scripts.
     - No launching MCP servers (`command`/`args` are inspected as data, never spawned).
@@ -83,7 +83,7 @@ scan target → │ Discovery  │  walk user/project/local/managed/plugin scope
               └─────┬──────┘  (single-file checks now; cross-file class = v2)
                     │
               ┌─────▼──────┐  baseline/suppression, severity threshold,
-              │  Findings  │  inline `# agentscanner:ignore AS-XXX` directives
+              │  Findings  │  inline `# aisecscan:ignore AS-XXX` directives
               └─────┬──────┘
                     │
               ┌─────▼──────┐  CLI table · JSON · SARIF (GitHub code scanning)
@@ -97,14 +97,14 @@ scan target → │ Discovery  │  walk user/project/local/managed/plugin scope
 2. **Per-file scanning for v1.** No global effective-merge resolver. Cross-file posture issues (project re-allowing a managed/user deny) are a *separate check class* run after all files parse — explicitly deferred to v2 to bound scope.
 3. **Curated, high-precision MVP** (~28 checks). Noise on day one kills adoption; breadth is additive later.
 4. **Two check authoring styles.** (a) Python `Check` subclasses for logic-heavy rules; (b) declarative **YAML policies** (jsonpath/regex/conditions) for simple, community-contributable rules — loaded from a built-in dir and `--policy-dir`.
-5. **Rules are independently authored.** The `awesome-claude-security` repo (GPL-3.0) is used as *inspiration and as a fixture corpus to scan*, never as copied rule text — keeping `agentscanner` free to license permissively (Apache-2.0).
+5. **Rules are independently authored.** The `awesome-claude-security` repo (GPL-3.0) is used as *inspiration and as a fixture corpus to scan*, never as copied rule text — keeping `aisecscan` free to license permissively (Apache-2.0).
 
 ---
 
 ## Module layout
 
 ```
-src/agentscanner/
+src/aisecscan/
   cli.py            # Typer CLI
   models.py         # Severity, ArtifactType, Resource (IR), Finding
   discovery.py      # scope walking + classification

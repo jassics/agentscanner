@@ -6,9 +6,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from agentscanner.checks.prompts import UnboundedExecutionLanguage
-from agentscanner.models import ArtifactType, Scope
-from agentscanner.parsers.markdown_parser import parse_markdown
+from aisecscan.checks.prompts import UnboundedExecutionLanguage
+from aisecscan.models import ArtifactType, Scope
+from aisecscan.parsers.markdown_parser import parse_markdown
 
 
 def _agent(tmp_path: Path, body: str) -> Path:

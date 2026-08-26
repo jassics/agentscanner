@@ -1,4 +1,4 @@
-"""agentscanner command-line interface."""
+"""aisecscan command-line interface."""
 from __future__ import annotations
 
 import os
@@ -19,8 +19,8 @@ from .reporters import render
 
 app = typer.Typer(
     add_completion=False,
-    help="Static security scanner for Claude Code configuration "
-    "(settings, hooks, MCP, agents, skills, CLAUDE.md).",
+    help="Static security scanner for AI/LLM/agentic repos "
+    "(settings, hooks, MCP, agents, skills, CLAUDE.md — Claude Code today, more assistants soon).",
     no_args_is_help=True,
 )
 _err = Console(stderr=True)
@@ -114,7 +114,7 @@ def scan(
 ) -> None:
     """Scan a repository (and optionally ~/.claude) for insecure Claude Code config."""
     if offline:
-        os.environ["AGENTSCANNER_OFFLINE"] = "1"
+        os.environ["AISECSCAN_OFFLINE"] = "1"
     if model_tier not in ("high", "low"):
         _err.print(f"[red]Invalid --model-tier: {model_tier!r} (must be 'high' or 'low')[/red]")
         raise typer.Exit(2)
@@ -219,7 +219,7 @@ def probe(
 def list_checks() -> None:
     """List the built-in check catalog."""
     console = Console()
-    table = Table(title="agentscanner checks")
+    table = Table(title="aisecscan checks")
     table.add_column("ID", no_wrap=True)
     table.add_column("Severity", no_wrap=True)
     table.add_column("Title")
@@ -230,8 +230,8 @@ def list_checks() -> None:
 
 @app.command()
 def version() -> None:
-    """Print the agentscanner version."""
-    print(f"agentscanner {__version__}")
+    """Print the aisecscan version."""
+    print(f"aisecscan {__version__}")
 
 
 if __name__ == "__main__":  # pragma: no cover
